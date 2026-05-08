@@ -13,7 +13,7 @@ export default function NSWhy() {
         {/* Left column: text + callout */}
         <div className="col-start-1 row-start-1 max-tablet:row-auto row-span-2 self-start">
           <span className="ns-eyebrow">POR QUÉ NORSOLAR</span>
-          <h2 className="ns-display-h">¿POR QUÉ<br />NORSOLAR ES<br />DIFERENTE?</h2>
+          <h2 className="ns-display-h-md">¿POR QUÉ<br />NORSOLAR ES<br />DIFERENTE?</h2>
           <p className="ns-body-lg">
             Combinamos experiencia local, tecnología de clase mundial y atención
             personalizada para entregar proyectos solares que realmente generan resultados.

@@ -32,7 +32,7 @@ export default function NSProblema() {
         <div className="mb-12">
           <span className="ns-eyebrow">EL PROBLEMA</span>
           <h2 className="ns-display-h-md mt-4">
-            Altas tarifas e inestabilidad eléctrica
+            inestabilidad eléctrica y costos crecientes
           </h2>
         </div>
 
