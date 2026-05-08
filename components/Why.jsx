@@ -1,59 +1,176 @@
-export default function NSWhy() {
-  const features = [
-    { icon: 'sun',    title: 'Experiencia comprobada', body: '+250 proyectos instalados en Ecuador' },
-    { icon: 'wrench', title: 'Soluciones a medida',    body: 'Residencial, comercial e industrial' },
-    { icon: 'shield', title: 'Certificación y garantía', body: 'Productos con hasta 25 años de garantía' },
-    { icon: 'trend',  title: 'Retorno de inversión',   body: 'Recupere su inversión en 3–4 años' },
-  ];
+import { useState } from 'react';
+import {
+  SparklesIcon,
+  ShieldCheckIcon,
+  UserGroupIcon,
+  CurrencyDollarIcon,
+  ChevronDownIcon,
+} from '@heroicons/react/24/outline';
 
+const ICON_MAP = {
+  leaf: SparklesIcon,
+  shield: ShieldCheckIcon,
+  support: UserGroupIcon,
+  money: CurrencyDollarIcon,
+};
+
+const FEATURES = [
+  {
+    title: 'Sustentabilidad certificada',
+    desc: 'Energía limpia que reduce emisiones y cuida el planeta.',
+    icon: 'leaf',
+    more: 'Cada kWh solar evita ~0.5 kg de CO₂. Un sistema residencial promedio neutraliza más de 2.5 toneladas de emisiones al año.',
+  },
+  {
+    title: 'Solución a largo plazo',
+    desc: 'Equipos de alta calidad con hasta 25 años de garantía.',
+    icon: 'shield',
+    more: 'Trabajamos con paneles tier-1 y inversores de marcas certificadas internacionalmente. Vida útil de hasta 30 años con mantenimiento mínimo.',
+  },
+  {
+    title: 'Servicio al cliente excepcional',
+    desc: 'Acompañamiento antes, durante y después de su proyecto.',
+    icon: 'support',
+    more: 'Asesoría técnica, ingeniería personalizada, instalación certificada y monitoreo 24/7 desde su celular. Soporte directo con nuestro equipo en Ibarra.',
+  },
+  {
+    title: 'Ahorro garantizado',
+    desc: 'Reducción significativa en su factura de electricidad.',
+    icon: 'money',
+    more: 'Ecuador cuenta con radiación solar privilegiada por estar en la línea ecuatorial. Aproveche ese recurso ilimitado',
+  },
+];
+
+function FeatureCard({ icon, title, desc, more }) {
+  const [open, setOpen] = useState(false);
+  const Icon = ICON_MAP[icon];
   return (
-    <section className="ns-section" id="nosotros" data-screen-label="Por qué Norsolar">
-      <div className="ns-container grid grid-cols-2 max-tablet:grid-cols-1 gap-x-14 gap-y-8">
+    <div className="group relative bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 overflow-hidden transition-all duration-300 hover:bg-white/[0.08] hover:border-ns-orange/30 hover:-translate-y-1">
+      {/* Icon */}
+      <div className="relative w-10 h-10 rounded-xl bg-ns-orange/15 text-ns-orange flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-ns-orange/25">
+        <Icon className="w-[22px] h-[22px]" />
+      </div>
 
-        {/* Left column: text + callout */}
-        <div className="col-start-1 row-start-1 max-tablet:row-auto row-span-2 self-start">
-          <span className="ns-eyebrow">POR QUÉ NORSOLAR</span>
-          <h2 className="ns-display-h-md">¿POR QUÉ<br />NORSOLAR ES<br />DIFERENTE?</h2>
-          <p className="ns-body-lg">
-            Combinamos experiencia local, tecnología de clase mundial y atención
-            personalizada para entregar proyectos solares que realmente generan resultados.
-          </p>
-          <div className="flex items-center gap-3.5 bg-white border border-[#ECEFF3] rounded-[14px] p-4 px-5 mt-1.5 shadow-[0_4px_12px_rgba(15,26,46,0.04)] max-w-[420px]">
-            <div className="w-10 h-10 rounded-full bg-[rgba(242,140,40,0.12)] text-ns-orange flex items-center justify-center shrink-0">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M9 12l2 2 4-4" />
-              </svg>
-            </div>
-            <div>
-              <div className="font-display font-extrabold text-[14px] text-ns-navy mb-0.5">Regulación ARCERNNR 001/2021</div>
-              <div className="font-body text-[12px] text-ns-muted leading-[1.5]">Respaldo legal para generación distribuida y autoconsumo en Ecuador.</div>
+      {/* Title + desc */}
+      <h3 className="relative font-display font-extrabold text-[15px] text-white m-0 mb-2 leading-tight">{title}</h3>
+      <p className="relative font-body text-[13px] leading-[1.55] text-white/60 m-0 mb-3">{desc}</p>
+
+      {/* Toggle button */}
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="relative flex items-center gap-1 text-ns-orange font-body text-[12px] font-semibold cursor-pointer bg-transparent border-none p-0 mb-0"
+      >
+        {open ? 'Ver menos' : 'Ver más'}
+        <ChevronDownIcon className={`w-3.5 h-3.5 transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
+      </button>
+
+      {/* Collapsible detail */}
+      <div
+        className="relative overflow-hidden transition-all duration-300"
+        style={{ maxHeight: open ? '200px' : '0px', opacity: open ? 1 : 0 }}
+      >
+        <p className="font-body text-[12px] leading-[1.6] text-white/45 m-0 pt-3">{more}</p>
+      </div>
+
+      {/* Bottom orange accent bar on hover */}
+      <div className="absolute bottom-0 left-6 right-6 h-[2px] bg-ns-orange scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+    </div>
+  );
+}
+
+export default function NSWhy() {
+  return (
+    <section
+      className="ns-section relative overflow-hidden"
+      id="nosotros"
+      data-screen-label="Por qué Norsolar"
+      style={{ background: 'linear-gradient(160deg, #0F1A2E 0%, #1B2A4A 100%)' }}
+    >
+      {/* Decorative faded headline watermark */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute -top-6 -left-4 font-display font-extrabold uppercase leading-none text-white/[0.03] whitespace-nowrap"
+        style={{ fontSize: 'clamp(120px, 18vw, 220px)', letterSpacing: '-0.04em' }}
+      >
+        NORSOLAR
+      </div>
+
+      {/* Decorative orange glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 right-0 w-[520px] h-[520px] rounded-full opacity-[0.07]"
+        style={{ background: 'radial-gradient(circle, #F28C28 0%, transparent 70%)', transform: 'translate(30%, -30%)' }}
+      />
+
+      <div className="ns-container relative">
+
+        {/* ── TOP SPLIT: text + image ─────────────────────────────────── */}
+        <div className="grid grid-cols-2 max-tablet:grid-cols-1 gap-12 items-center mb-16">
+
+          {/* Left: copy + two stat pills */}
+          <div>
+            <span className="ns-eyebrow">POR QUÉ NORSOLAR</span>
+            <h2
+              className="font-display font-extrabold uppercase text-white m-0 mb-6 leading-[0.95] tracking-[-0.02em]"
+              style={{ fontSize: 'clamp(40px, 5.2vw, 68px)' }}
+            >
+              ¿POR QUÉ<br />
+              <span className="text-ns-orange">NORSOLAR</span><br />
+              ES DIFERENTE?
+            </h2>
+            <p className="font-body text-[17px] leading-[1.7] text-white/60 m-0 mb-8 max-w-[440px]">
+              Combinamos experiencia local, tecnología de clase mundial y atención
+              personalizada para entregar proyectos solares que realmente generan resultados.
+            </p>
+
+            <a href="#contacto" className="ns-btn ns-btn-primary self-start">
+              Cotiza gratis online
+            </a>
+          </div>
+
+          {/* Right: image with decorative frame */}
+          <div className="relative max-tablet:mt-2">
+            {/* Orange offset frame */}
+            <div
+              aria-hidden="true"
+              className="absolute rounded-2xl border border-ns-orange/30"
+              style={{ inset: 0, transform: 'translate(12px, 12px)' }}
+            />
+            {/* Photo */}
+            <div
+              className="relative rounded-2xl bg-cover bg-center overflow-hidden"
+              style={{
+                backgroundImage: 'url(/assets/equipo.png)',
+                minHeight: 'clamp(280px, 38vw, 460px)',
+              }}
+            >
+              {/* Bottom gradient overlay */}
+              <div
+                className="absolute inset-0 rounded-2xl"
+                style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(15,26,46,0.82) 100%)' }}
+              />
+
+              {/* Regulatory badge inside image */}
+              <div className="absolute bottom-5 left-5 right-5 flex items-center gap-3 bg-[rgba(15,26,46,0.88)] backdrop-blur-md border border-white/[0.12] rounded-[12px] p-3.5">
+                <div className="w-9 h-9 rounded-full bg-ns-orange/20 text-ns-orange flex items-center justify-center shrink-0">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="font-display font-extrabold text-[12px] text-white mb-0.5 leading-none">Regulación ARCERNNR 001/2021</div>
+                  <div className="font-body text-[11px] text-white/50 leading-[1.4]">Respaldo legal para generación distribuida y autoconsumo en Ecuador.</div>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
 
-        {/* Right top: image */}
-        <div
-          className="max-tablet:col-start-1 col-start-2 row-start-1 bg-cover bg-center rounded-2xl min-h-[380px] max-tablet:min-h-[280px] shadow-[0_12px_32px_rgba(15,26,46,0.12)]"
-          style={{ backgroundImage: 'url(/assets/equipo-trabajando.jpg)' }}
-        />
-
-        {/* Right bottom: feature cards */}
-        <div className="max-tablet:col-start-1 col-start-2 row-start-2 grid grid-cols-2 max-[600px]:grid-cols-1 gap-3.5">
-          {features.map(f => (
-            <div
-              key={f.title}
-              className="bg-white border border-[#ECEFF3] rounded-[14px] p-5 shadow-[0_4px_12px_rgba(15,26,46,0.04)] transition-[transform,box-shadow] duration-[220ms] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(15,26,46,0.10)]"
-            >
-              <div className="w-[42px] h-[42px] rounded-xl bg-ns-orange-soft text-ns-orange flex items-center justify-center mb-3.5">
-                {f.icon === 'sun'    && <svg className="w-[22px] h-[22px] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" /><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" /></svg>}
-                {f.icon === 'wrench' && <svg className="w-[22px] h-[22px] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>}
-                {f.icon === 'shield' && <svg className="w-[22px] h-[22px] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M9 12l2 2 4-4" /></svg>}
-                {f.icon === 'trend'  && <svg className="w-[22px] h-[22px] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8" /><path d="M14 7h7v7" /></svg>}
-              </div>
-              <h3 className="font-display font-extrabold text-[17px] text-ns-navy m-0 mb-1.5">{f.title}</h3>
-              <p className="font-body text-[13px] leading-[1.5] text-ns-muted m-0">{f.body}</p>
-            </div>
-          ))}
+        {/* ── BOTTOM: 4 feature cards ──────────────────────────────────── */}
+        <div className="border-t border-white/[0.08] pt-12 grid grid-cols-4 max-tablet:grid-cols-2 max-[600px]:grid-cols-1 gap-4 items-start">
+          {FEATURES.map((feature) => <FeatureCard key={feature.title} {...feature} />)}
         </div>
 
       </div>
