@@ -35,7 +35,7 @@ export default function NSFooter() {
 
         {/* Soluciones */}
         <div>
-          <h4 className="font-display font-semibold text-[12px] tracking-[0.18em] uppercase text-ns-orange m-0 mb-3.5">SOLUCIONES</h4>
+          <h3 className="font-display font-semibold text-[12px] tracking-[0.18em] uppercase text-ns-orange m-0 mb-3.5">SOLUCIONES</h3>
           <ul className="p-0 m-0 list-none">
             {['Sistemas Residenciales','Sistemas Comerciales','Sistemas Industriales','Baterías y Almacenamiento','Mantenimiento'].map(item => (
               <li key={item}><a href="#" className="font-body text-[13px] leading-[1.9] text-white/70 no-underline hover:text-ns-orange">{item}</a></li>
@@ -45,7 +45,7 @@ export default function NSFooter() {
 
         {/* Empresa */}
         <div>
-          <h4 className="font-display font-semibold text-[12px] tracking-[0.18em] uppercase text-ns-orange m-0 mb-3.5">EMPRESA</h4>
+          <h3 className="font-display font-semibold text-[12px] tracking-[0.18em] uppercase text-ns-orange m-0 mb-3.5">EMPRESA</h3>
           <ul className="p-0 m-0 list-none">
             {['Nosotros','Certificaciones','Blog','Políticas','Trabaja con nosotros'].map(item => (
               <li key={item}><a href="#" className="font-body text-[13px] leading-[1.9] text-white/70 no-underline hover:text-ns-orange">{item}</a></li>
@@ -55,7 +55,7 @@ export default function NSFooter() {
 
         {/* Contacto */}
         <div>
-          <h4 className="font-display font-semibold text-[12px] tracking-[0.18em] uppercase text-ns-orange m-0 mb-3.5">CONTACTO</h4>
+          <h3 className="font-display font-semibold text-[12px] tracking-[0.18em] uppercase text-ns-orange m-0 mb-3.5">CONTACTO</h3>
           <ul className="p-0 m-0 list-none">
             {[
               { icon: <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z" />, extra: <circle cx="12" cy="10" r="3" />, text: 'Ibarra, Imbabura, Ecuador\nAv. Jaime Rivadeneira 14-50' },
@@ -77,7 +77,7 @@ export default function NSFooter() {
 
         {/* Síguenos */}
         <div>
-          <h4 className="font-display font-semibold text-[12px] tracking-[0.18em] uppercase text-ns-orange m-0 mb-3.5">SÍGUENOS</h4>
+          <h3 className="font-display font-semibold text-[12px] tracking-[0.18em] uppercase text-ns-orange m-0 mb-3.5">SÍGUENOS</h3>
           <div className="flex gap-2">
             {[
               { label: 'Facebook',  icon: <path d="M9 8H6v4h3v12h5V12h3.6l.4-4h-4V6c0-1 .3-2 1.7-2H18V0h-3.4C11.3 0 9 2 9 5z" />, fill: true },

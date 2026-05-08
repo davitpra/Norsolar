@@ -64,16 +64,22 @@ export default function NSQuoteForm({ id }) {
                 <input className="ns-input" placeholder="Teléfono"           value={form.telefono} onChange={upd('telefono')} required />
               </div>
               <div className="grid grid-cols-2 max-tablet:grid-cols-1 gap-3">
-                <select className="ns-input" value={form.ciudad} onChange={upd('ciudad')} required>
-                  <option value="">Ciudad</option>
-                  <option>Ibarra</option><option>Quito</option><option>Guayaquil</option>
-                  <option>Cuenca</option><option>Otavalo</option><option>Otra</option>
-                </select>
-                <select className="ns-input" value={form.tipo} onChange={upd('tipo')} required>
-                  <option value="">Tipo de solución</option>
-                  <option>Residencial</option><option>Comercial</option>
-                  <option>Industrial</option><option>Baterías y almacenamiento</option>
-                </select>
+                <div>
+                  <label htmlFor="q-ciudad" className="sr-only">Ciudad</label>
+                  <select id="q-ciudad" className="ns-input w-full" value={form.ciudad} onChange={upd('ciudad')} required>
+                    <option value="">Ciudad</option>
+                    <option>Ibarra</option><option>Quito</option><option>Guayaquil</option>
+                    <option>Cuenca</option><option>Otavalo</option><option>Otra</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="q-tipo" className="sr-only">Tipo de solución</label>
+                  <select id="q-tipo" className="ns-input w-full" value={form.tipo} onChange={upd('tipo')} required>
+                    <option value="">Tipo de solución</option>
+                    <option>Residencial</option><option>Comercial</option>
+                    <option>Industrial</option><option>Baterías y almacenamiento</option>
+                  </select>
+                </div>
               </div>
               <input className="ns-input ns-input-full" placeholder="Consumo mensual aproximado ($)" value={form.consumo} onChange={upd('consumo')} />
               <textarea className="ns-input ns-input-full resize-y min-h-[80px]" placeholder="Mensaje (opcional)" rows="3" value={form.mensaje} onChange={upd('mensaje')} />

@@ -50,7 +50,7 @@ export default function NSWhy() {
                 {f.icon === 'shield' && <svg className="w-[22px] h-[22px] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M9 12l2 2 4-4" /></svg>}
                 {f.icon === 'trend'  && <svg className="w-[22px] h-[22px] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8" /><path d="M14 7h7v7" /></svg>}
               </div>
-              <h4 className="font-display font-extrabold text-[17px] text-ns-navy m-0 mb-1.5">{f.title}</h4>
+              <h3 className="font-display font-extrabold text-[17px] text-ns-navy m-0 mb-1.5">{f.title}</h3>
               <p className="font-body text-[13px] leading-[1.5] text-ns-muted m-0">{f.body}</p>
             </div>
           ))}

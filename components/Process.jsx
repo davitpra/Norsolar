@@ -35,7 +35,7 @@ export default function NSProcess({ onCotizar }) {
                 style={{ background: 'linear-gradient(180deg, rgba(15,26,46,0.15) 0%, rgba(15,26,46,0.95) 100%)' }}
               />
               <span className="relative font-display font-extrabold text-[56px] leading-none text-ns-orange mb-auto self-start">{s.n}</span>
-              <h4 className="relative font-display font-extrabold text-[22px] leading-[1.1] m-0 mb-2">{s.title}</h4>
+              <h3 className="relative font-display font-extrabold text-[22px] leading-[1.1] m-0 mb-2">{s.title}</h3>
               <p className="relative font-body text-[13px] leading-[1.5] m-0 opacity-90">{s.desc}</p>
             </article>
           ))}

@@ -54,8 +54,9 @@ export default function NSWhyChoose() {
               key={r.title}
               className={`bg-white border border-[#ECEFF3] rounded-[14px] mb-3 transition-[transform,box-shadow] duration-[220ms] hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(15,26,46,0.10)]`}
             >
-              <div
-                className="grid grid-cols-[auto_1fr_auto] items-center gap-[18px] p-[22px] px-6 cursor-pointer"
+              <button
+                className="grid grid-cols-[auto_1fr_auto] items-center gap-[18px] p-[22px] px-6 cursor-pointer w-full text-left bg-transparent border-0"
+                aria-expanded={open === i}
                 onClick={() => setOpen(open === i ? -1 : i)}
               >
                 <div className="w-11 h-11 bg-ns-orange-soft rounded-xl flex items-center justify-center text-ns-orange">
@@ -64,19 +65,19 @@ export default function NSWhyChoose() {
                   {r.icon === 'support' && <svg className="w-[22px] h-[22px] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M9 9h.01M15 9h.01M9 15c1 1 4 1 6 0" /></svg>}
                 </div>
                 <div>
-                  <h4 className="font-display font-extrabold text-[16px] text-ns-navy m-0 mb-1">{r.title}</h4>
+                  <h3 className="font-display font-extrabold text-[16px] text-ns-navy m-0 mb-1">{r.title}</h3>
                   <p className="font-body text-[13px] text-ns-muted m-0 leading-[1.5]">{r.desc}</p>
                 </div>
-                <button className="inline-flex items-center gap-2 bg-transparent border-0 cursor-pointer p-0" aria-label="Toggle">
-                  <span className="ns-link">Read More</span>
+                <span className="inline-flex items-center gap-2" aria-hidden="true">
+                  <span className="ns-link">Ver más</span>
                   <svg
                     className={`text-ns-orange transition-transform duration-[240ms]${open === i ? ' rotate-180' : ''}`}
                     width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
                   >
                     <path d="M6 9l6 6 6-6" />
                   </svg>
-                </button>
-              </div>
+                </span>
+              </button>
               <div
                 className={`overflow-hidden transition-[max-height] duration-[360ms] ${open === i ? 'max-h-[200px]' : 'max-h-0'}`}
                 style={{ transitionTimingFunction: 'cubic-bezier(0.22,1,0.36,1)' }}
