@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import NSHeader from '@/components/Header';
 import NSHero from '@/components/Hero';
+import NSBand from '@/components/Band';
 import NSBrandBar from '@/components/BrandBar';
 import NSWhy from '@/components/Why';
 import NSProcess from '@/components/Process';
@@ -42,6 +43,7 @@ export default function Page() {
       <NSHeader active="INICIO" />
       <main>
         <NSHero />
+        <NSBand/>
         <NSBrandBar />
         <NSWhy />
         <NSProcess onCotizar={scrollToCotiza} />
