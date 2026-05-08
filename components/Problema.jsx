@@ -29,7 +29,7 @@ export default function NSProblema() {
     <section className="ns-section bg-ns-bg-alt">
       <div className="ns-container">
         {/* Header */}
-        <div className="mb-12 max-w-2xl">
+        <div className="mb-12">
           <span className="ns-eyebrow">EL PROBLEMA</span>
           <h2 className="ns-display-h-md mt-4">
             Altas tarifas e inestabilidad eléctrica
