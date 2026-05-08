@@ -10,7 +10,6 @@ import NSProcess from '@/components/Process';
 import NSProjects from '@/components/Projects';
 import NSQuoteForm from '@/components/QuoteForm';
 import NSTestimonials from '@/components/Testimonials';
-import NSWhyChoose from '@/components/WhyChoose';
 import NSProblema from '@/components/Problema';
 import NSSolution from '@/components/Solution';
 import NSFooter from '@/components/Footer';
@@ -54,7 +53,6 @@ export default function Page() {
         <NSProjects />
         <NSQuoteForm id="cotiza" />
         <NSTestimonials />
-        <NSWhyChoose />
       </main>
       <NSFooter />
       <NSWhatsAppFab />

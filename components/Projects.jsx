@@ -1,8 +1,8 @@
 export default function NSProjects() {
   const items = [
     { title: 'Energía limpia para el hogar',  desc: 'Sistemas residenciales que reducen su planilla eléctrica y le dan independencia.',  img: '/assets/instalacion-panel-2.jpg' },
-    { title: 'Sustentabilidad empresarial',   desc: 'Soluciones solares para comercios y empresas que buscan eficiencia y ahorro.',      img: '/assets/paneles-techo.jpg' },
-    { title: 'Energía solar para todos',      desc: 'Proyectos industriales e institucionales que impulsan un Ecuador más sostenible.',  img: '/assets/instalacion-panel-3.jpg' },
+    { title: 'Sustentabilidad empresarial',   desc: 'Soluciones solares para comercios y empresas que buscan eficiencia y ahorro.',      img: '/assets/instalacion-panel-3.jpg' },
+    { title: 'Energía solar para todos',      desc: 'Proyectos industriales e institucionales que impulsan un Ecuador más sostenible.',  img: '/assets/instalacion-panel-1.jpg' },
   ];
 
   return (
