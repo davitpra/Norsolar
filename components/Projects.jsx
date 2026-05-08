@@ -9,7 +9,7 @@ export default function NSProjects() {
     <section className="ns-section" id="proyectos" data-screen-label="Proyectos">
       <div className="ns-container">
         <span className="ns-eyebrow">NUESTROS PROYECTOS</span>
-        <h2 className="ns-display-h">PROYECTOS</h2>
+        <h2 className="ns-display-h-md">PROYECTOS</h2>
         <div className="grid grid-cols-3 max-tablet:grid-cols-2 max-[600px]:grid-cols-1 gap-7 mt-8">
           {items.map(p => (
             <article key={p.title} className="group flex flex-col gap-3">

@@ -8,7 +8,7 @@ export default function NSBrandBar() {
   ];
 
   return (
-    <section className="py-14 pb-16 bg-white">
+    <section className="py-14 pb-16 bg-ns-bg-alt">
       <div className="ns-container">
         <span className="ns-eyebrow">TRABAJAMOS CON LAS MEJORES MARCAS DEL MERCADO</span>
         <div className="grid grid-cols-5 max-tablet:grid-cols-3 max-[600px]:grid-cols-2 gap-8 items-center mt-7 opacity-75">

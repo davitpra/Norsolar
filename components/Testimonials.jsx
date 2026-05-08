@@ -23,22 +23,13 @@ export default function NSTestimonials() {
     .slice(0, 3);
 
   return (
-    <section className="ns-section bg-ns-bg-alt" data-screen-label="Testimonios">
+    <section className="ns-section bg-white" data-screen-label="Testimonios">
       <div className="ns-container grid grid-cols-[1fr_2fr] max-tablet:grid-cols-1 gap-10 items-start">
 
         {/* Left: stats */}
         <div>
           <span className="ns-eyebrow">TESTIMONIOS</span>
-          <h2 className="ns-display-h">TU MEJOR<br />OPCIÓN EN<br />ENERGÍA SOLAR</h2>
-          <div className="mt-4">
-            <div className="font-display font-extrabold text-[56px] leading-none tracking-[-0.02em] text-ns-navy">250+</div>
-            <div className="font-body text-[14px] text-ns-muted mt-1.5 leading-[1.4]">Proyectos completados<br />en todo Ecuador</div>
-          </div>
-          <div className="mt-4">
-            <div className="font-display font-extrabold text-[56px] leading-none tracking-[-0.02em] text-ns-navy">+90%</div>
-            <div className="font-body text-[14px] text-ns-muted mt-1.5 leading-[1.4]">Satisfacción<br />del cliente</div>
-          </div>
-          <div className="text-ns-orange text-[16px] tracking-[4px] mt-[18px]">★ ★ ★ ★ ★</div>
+          <h2 className="ns-display-h-md">TU MEJOR<br />OPCIÓN EN<br />ENERGÍA SOLAR</h2>
         </div>
 
         {/* Right: cards + dots */}
