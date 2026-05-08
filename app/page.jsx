@@ -11,6 +11,7 @@ import NSProjects from '@/components/Projects';
 import NSQuoteForm from '@/components/QuoteForm';
 import NSTestimonials from '@/components/Testimonials';
 import NSWhyChoose from '@/components/WhyChoose';
+import NSProblema from '@/components/Problema';
 import NSFooter from '@/components/Footer';
 import NSWhatsAppFab from '@/components/WhatsAppFab';
 
@@ -44,6 +45,7 @@ export default function Page() {
       <main>
         <NSHero />
         <NSBand/>
+        <NSProblema/>
         <NSBrandBar />
         <NSWhy />
         <NSProcess onCotizar={scrollToCotiza} />
