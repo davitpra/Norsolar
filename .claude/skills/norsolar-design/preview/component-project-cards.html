@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Project Card</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 18px; background: #fff; font-family: var(--font-body); }
+  .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .card { display: flex; flex-direction: column; gap: 10px; }
+  .img {
+    width: 100%; aspect-ratio: 16/10;
+    border-radius: 14px;
+    background-size: cover; background-position: center;
+  }
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--ns-navy);
+    margin: 0;
+    line-height: 1.15;
+  }
+  p {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--ns-text-muted);
+    margin: 0;
+  }
+  a {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--ns-orange);
+    text-decoration: none;
+    margin-top: 2px;
+  }
+  a::after { content: " →"; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="card">
+      <div class="img" style="background-image:url('../assets/instalacion-panel-2.jpg')"></div>
+      <h3>Energía limpia para el hogar</h3>
+      <p>Sistemas residenciales que reducen su planilla eléctrica y le dan independencia.</p>
+      <a href="#">Ver más</a>
+    </div>
+    <div class="card">
+      <div class="img" style="background-image:url('../assets/paneles-techo.jpg')"></div>
+      <h3>Sustentabilidad empresarial</h3>
+      <p>Soluciones solares para comercios e industrias que buscan eficiencia y ahorro.</p>
+      <a href="#">Ver más</a>
+    </div>
+    <div class="card">
+      <div class="img" style="background-image:url('../assets/instalacion-panel-3.jpg')"></div>
+      <h3>Energía solar para todos</h3>
+      <p>Proyectos industriales e institucionales que impulsan un Ecuador más sostenible.</p>
+      <a href="#">Ver más</a>
+    </div>
+  </div>
+</body>
+</html>

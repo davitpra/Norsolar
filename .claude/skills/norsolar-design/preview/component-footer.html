@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Footer</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--ns-navy-deep); color: #fff; font-family: var(--font-body); }
+  .footer {
+    padding: 28px 32px 22px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr 0.8fr;
+    gap: 24px;
+  }
+  .col h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ns-orange);
+    margin: 0 0 12px;
+  }
+  .col p, .col a, .col li {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+  }
+  .col ul { padding: 0; margin: 0; list-style: none; }
+  .brand img { height: 30px; margin-bottom: 12px; }
+  .brand p { margin: 0; max-width: 240px; }
+  .social { display: flex; gap: 10px; }
+  .social a {
+    width: 30px; height: 30px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+  }
+  .bottom {
+    padding: 14px 32px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex; justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="footer">
+    <div class="col brand">
+      <img src="../assets/logo-dark-bg.png" alt="Norsolar" />
+      <p>Impulsamos un futuro sostenible con soluciones solares fotovoltaicas de alta calidad en todo el Ecuador.</p>
+    </div>
+    <div class="col">
+      <h4>Soluciones</h4>
+      <ul><li>Sistemas Residenciales</li><li>Sistemas Comerciales</li><li>Sistemas Industriales</li><li>Baterías y Almacenamiento</li></ul>
+    </div>
+    <div class="col">
+      <h4>Empresa</h4>
+      <ul><li>Nosotros</li><li>Certificaciones</li><li>Blog</li><li>Trabaja con nosotros</li></ul>
+    </div>
+    <div class="col">
+      <h4>Contacto</h4>
+      <ul>
+        <li>Ibarra, Imbabura, Ecuador</li>
+        <li>096 123 4567</li>
+        <li>info@norsolar.ec</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Síguenos</h4>
+      <div class="social">
+        <a href="#">f</a><a href="#">in</a><a href="#">@</a>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <span>© 2025 Norsolar Ecuador</span>
+    <span>Términos &nbsp;·&nbsp; Política de Privacidad</span>
+  </div>
+</body>
+</html>

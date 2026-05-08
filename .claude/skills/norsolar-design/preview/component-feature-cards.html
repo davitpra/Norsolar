@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Feature Card</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 24px; background: var(--ns-bg-alt); font-family: var(--font-body); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #E5E7EB;
+    padding: 22px 22px 24px;
+    box-shadow: 0 1px 2px rgba(15,26,46,0.04);
+  }
+  .icon-wrap {
+    width: 44px; height: 44px;
+    background: var(--ns-orange-soft);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .icon-wrap svg { stroke: var(--ns-orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--ns-navy);
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+  p {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ns-text-muted);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="card">
+      <div class="icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg></div>
+      <h3>Experiencia comprobada</h3>
+      <p>+250 proyectos instalados en Ecuador.</p>
+    </div>
+    <div class="card">
+      <div class="icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+      <h3>Soluciones a medida</h3>
+      <p>Residencial, comercial e industrial.</p>
+    </div>
+    <div class="card">
+      <div class="icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h3>Certificación y garantía</h3>
+      <p>Productos con hasta 25 años de garantía.</p>
+    </div>
+    <div class="card">
+      <div class="icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+      <h3>Retorno de inversión</h3>
+      <p>Recupere su inversión en 3–4 años.</p>
+    </div>
+  </div>
+</body>
+</html>

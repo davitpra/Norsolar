@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Form Inputs</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 24px; background: var(--ns-navy-deep); font-family: var(--font-body); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ns-navy);
+  }
+  .input::placeholder { color: var(--ns-text-muted); }
+  .input.focus { border-color: var(--ns-orange); box-shadow: 0 0 0 3px rgba(242,140,40,0.18); outline: none; }
+  .select {
+    background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%231B2A4A' d='M6 8L0 0h12z'/></svg>") no-repeat right 16px center;
+    appearance: none;
+    color: var(--ns-text-muted);
+  }
+  .full { grid-column: span 2; }
+  .submit {
+    grid-column: span 2;
+    padding: 14px;
+    background: var(--ns-orange);
+    color: #fff;
+    border: 0;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <input class="input" placeholder="Nombre completo" />
+    <input class="input focus" placeholder="Correo electrónico" value="ana@empresa.ec" />
+    <input class="input" placeholder="Teléfono" />
+    <select class="input select"><option>Ciudad</option></select>
+    <select class="input select full"><option>Tipo de solución</option></select>
+    <input class="input full" placeholder="Consumo mensual aproximado ($)" />
+    <button class="submit">Enviar Cotización</button>
+  </div>
+</body>
+</html>

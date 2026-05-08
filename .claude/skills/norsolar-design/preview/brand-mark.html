@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Brand Mark</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; font-family: var(--font-body); }
+  .wrap {
+    height: 280px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 0;
+  }
+  .pattern {
+    background: var(--ns-navy-deep);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pattern::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .pattern svg { position: relative; }
+  .right {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 28px 36px;
+  }
+  .label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: var(--ls-section);
+    text-transform: uppercase;
+    color: var(--ns-orange);
+    margin-bottom: 12px;
+  }
+  .title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1.05;
+    color: var(--ns-navy);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+  }
+  .desc {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ns-text-muted);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="pattern">
+      <img src="../assets/sun-mark.png" alt="Sol Norsolar" style="width: 180px; height: 180px;" />
+    </div>
+    <div class="right">
+      <div class="label">○ Brand Mark</div>
+      <h2 class="title">Sol Norsolar</h2>
+      <p class="desc">Estrella de 8 puntas en naranja solar (#F28C28) sobre cualquier fondo. Aparece como ícono de marca, sello de agua sobre fotografía, y elemento de patrón sobre superficies oscuras.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Eyebrow Pattern</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 28px 36px; background: #fff; font-family: var(--font-body); }
+  .demo { display: flex; flex-direction: column; gap: 14px; }
+  .row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
+    padding: 14px 18px;
+    background: var(--ns-bg-alt);
+    border-radius: 12px;
+    gap: 14px;
+  }
+  .badge {
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--ns-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(242,140,40,0.12);
+    color: var(--ns-orange);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .pill::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--ns-success-soft);
+    color: var(--ns-success);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid var(--ns-navy);
+    color: var(--ns-navy);
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div class="demo">
+    <div class="row"><span class="badge">Eyebrow</span><span class="pill">El proceso</span></div>
+    <div class="row"><span class="badge">Success</span><span class="chip">↑ +325% demanda</span></div>
+    <div class="row"><span class="badge">Tag</span><span class="tag">Residencial</span></div>
+  </div>
+</body>
+</html>

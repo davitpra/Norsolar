@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Testimonial Card</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 20px; background: var(--ns-bg-alt); font-family: var(--font-body); }
+  .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #ECEFF3;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .header { display: flex; justify-content: space-between; align-items: center; }
+  .quote-mark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--ns-navy);
+    line-height: 0.6;
+  }
+  .stars { color: var(--ns-orange); font-size: 14px; letter-spacing: 1px; }
+  .text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ns-navy);
+    margin: 0;
+  }
+  .person { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--ns-orange), var(--ns-navy));
+  }
+  .name { font-family: var(--font-display); font-weight: 600; font-size: 12px; color: var(--ns-navy); }
+  .role { font-family: var(--font-body); font-size: 11px; color: var(--ns-text-muted); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="card">
+      <div class="header"><span class="quote-mark">&ldquo;&ldquo;</span><span class="stars">★★★★★</span></div>
+      <p class="text">Gracias a Norsolar redujimos nuestra planilla casi a cero. Excelente asesoría y cumplieron todo lo prometido.</p>
+      <div class="person"><div class="avatar"></div><div><div class="name">María Fernanda R.</div><div class="role">Hogar — Ibarra</div></div></div>
+    </div>
+    <div class="card">
+      <div class="header"><span class="quote-mark">&ldquo;&ldquo;</span><span class="stars">★★★★★</span></div>
+      <p class="text">La instalación fue rápida y profesional. Ahora nuestra empresa tiene ahorros significativos cada mes.</p>
+      <div class="person"><div class="avatar" style="background:linear-gradient(135deg,#2D4470,#22C55E)"></div><div><div class="name">Carlos Andrade</div><div class="role">Gerente — Comercio</div></div></div>
+    </div>
+    <div class="card">
+      <div class="header"><span class="quote-mark">&ldquo;&ldquo;</span><span class="stars">★★★★★</span></div>
+      <p class="text">Norsolar nos brindó una solución a la medida y monitoreo 24/7. Totalmente recomendados.</p>
+      <div class="person"><div class="avatar" style="background:linear-gradient(135deg,#F28C28,#1B2A4A)"></div><div><div class="name">Ing. Laura Pérez</div><div class="role">Industria — Quito</div></div></div>
+    </div>
+  </div>
+</body>
+</html>

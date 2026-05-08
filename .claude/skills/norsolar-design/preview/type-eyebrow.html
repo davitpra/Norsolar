@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Eyebrow / Micro-label</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 32px 40px; background: #fff; font-family: var(--font-body); }
+  .stack { display: flex; flex-direction: column; gap: 18px; }
+  .item { display: flex; flex-direction: column; }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ns-orange);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 7px; height: 7px;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+  }
+  .title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    color: var(--ns-navy);
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.05;
+  }
+  .meta {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #F0F1F4;
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--ns-text-muted);
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+  <div class="stack">
+    <div class="item">
+      <span class="eyebrow">POR QUÉ NORSOLAR</span>
+      <h2 class="title">Diferentes desde el primer panel</h2>
+    </div>
+    <div class="item">
+      <span class="eyebrow">EL PROCESO</span>
+      <h2 class="title">Ir a solar es más fácil de lo que piensa</h2>
+    </div>
+  </div>
+  <div class="meta">
+    Patrón: círculo · MAYÚSCULAS · letter-spacing 0.22em · Montserrat SemiBold 12px · color naranja. Aparece arriba de cada titular de sección.
+  </div>
+</body>
+</html>

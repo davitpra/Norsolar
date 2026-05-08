@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Header</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--ns-navy-deep); font-family: var(--font-body); }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    height: 80px; box-sizing: border-box;
+  }
+  .logo img { height: 36px; display: block; }
+  nav ul {
+    display: flex; gap: 28px; list-style: none; padding: 0; margin: 0;
+  }
+  nav a {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+  }
+  nav a.active { color: var(--ns-orange); }
+  .cta {
+    padding: 12px 22px;
+    background: var(--ns-orange);
+    color: #fff;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    border: 0;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo"><img src="../assets/logo-dark-bg.png" alt="Norsolar" /></div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active">INICIO</a></li>
+        <li><a href="#">NOSOTROS</a></li>
+        <li><a href="#">SOLUCIONES</a></li>
+        <li><a href="#">PROYECTOS</a></li>
+        <li><a href="#">CONTACTO</a></li>
+      </ul>
+    </nav>
+    <button class="cta">Cotiza Gratis</button>
+  </div>
+</body>
+</html>

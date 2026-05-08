@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Display Type</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 28px 36px; background: #fff; font-family: var(--font-body); }
+  .label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ns-orange);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .label::before { content: ""; width: 6px; height: 6px; border: 1.5px solid currentColor; border-radius: 999px; }
+  .specimen {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 88px;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--ns-navy);
+    margin: 0;
+  }
+  .meta {
+    margin-top: 14px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--ns-text-muted);
+    display: flex; gap: 24px;
+  }
+  .meta b { color: var(--ns-navy); font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="label">DISPLAY · MONTSERRAT EXTRABOLD</div>
+  <p class="specimen">INSTALACIÓN<br/>DE PANELES</p>
+  <div class="meta">
+    <span><b>Montserrat</b> · 800</span>
+    <span><b>Tracking</b> -0.02em</span>
+    <span><b>Line</b> 0.95</span>
+    <span><b>Case</b> UPPERCASE</span>
+  </div>
+</body>
+</html>

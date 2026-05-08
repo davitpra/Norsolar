@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Colores Neutrales</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; font-family: var(--font-body); }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); height: 200px; }
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    font-family: var(--font-body);
+  }
+  .name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .hex { font-size: 12px; font-family: ui-monospace, monospace; }
+  .role { font-size: 10px; margin-top: 4px; opacity: 0.7; }
+  .light { color: #1B2A4A; }
+  .dark { color: #fff; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="swatch light" style="background:#FFFFFF; border-right: 1px solid #E5E7EB;">
+      <div class="name">Blanco</div>
+      <div class="hex">#FFFFFF</div>
+      <div class="role">Fondo base</div>
+    </div>
+    <div class="swatch light" style="background:#F7F8FA;">
+      <div class="name">Gris Claro</div>
+      <div class="hex">#F7F8FA</div>
+      <div class="role">Fondo alterno</div>
+    </div>
+    <div class="swatch light" style="background:#E5E7EB;">
+      <div class="name">Borde</div>
+      <div class="hex">#E5E7EB</div>
+      <div class="role">Líneas, divisores</div>
+    </div>
+    <div class="swatch dark" style="background:#6B7280;">
+      <div class="name">Texto Mute</div>
+      <div class="hex">#6B7280</div>
+      <div class="role">Texto secundario</div>
+    </div>
+    <div class="swatch dark" style="background:#1B1B1B;">
+      <div class="name">Gris Oscuro</div>
+      <div class="hex">#1B1B1B</div>
+      <div class="role">Texto duro</div>
+    </div>
+  </div>
+</body>
+</html>

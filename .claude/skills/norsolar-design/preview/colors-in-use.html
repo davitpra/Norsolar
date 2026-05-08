@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Color en Uso</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: #fff; font-family: var(--font-body); }
+  .demo {
+    height: 280px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  .block { padding: 28px; display: flex; flex-direction: column; justify-content: center; }
+  .light { background: #fff; }
+  .alt { background: var(--ns-bg-alt); }
+  .dark { background: var(--ns-navy-deep); color: #fff; }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ns-orange);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; border: 1.5px solid currentColor; border-radius: 999px; }
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    line-height: 1.05;
+  }
+  .light h3, .alt h3 { color: var(--ns-navy); }
+  .dark h3 { color: #fff; }
+  p {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 0;
+    color: var(--ns-text-muted);
+  }
+  .dark p { color: rgba(255,255,255,0.7); }
+  .pill {
+    display: inline-block;
+    padding: 8px 16px;
+    background: var(--ns-orange);
+    color: #fff;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    margin-top: 14px;
+    align-self: flex-start;
+  }
+</style>
+</head>
+<body>
+  <div class="demo">
+    <div class="block light">
+      <div class="eyebrow">FONDO CLARO</div>
+      <h3>Sección base</h3>
+      <p>Blanco con texto navy. La mayoría de bloques editoriales viven aquí.</p>
+      <span class="pill">Cotiza Gratis</span>
+    </div>
+    <div class="block alt">
+      <div class="eyebrow">FONDO ALTERNO</div>
+      <h3>Ritmo visual</h3>
+      <p>Gris #F7F8FA separa secciones sin romper la continuidad cromática.</p>
+      <span class="pill">Calcula tu Ahorro</span>
+    </div>
+    <div class="block dark">
+      <div class="eyebrow">FONDO OSCURO</div>
+      <h3>Hero / CTA</h3>
+      <p>Navy profundo para hero, formulario de cotización y footer.</p>
+      <span class="pill">Empieza Ahora</span>
+    </div>
+  </div>
+</body>
+</html>

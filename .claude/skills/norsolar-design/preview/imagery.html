@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Imagery</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: #000; font-family: var(--font-body); }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+    height: 280px;
+  }
+  .img { background-size: cover; background-position: center; position: relative; }
+  .img.span { grid-row: span 2; }
+  .img::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 12px; bottom: 10px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: #fff;
+    text-transform: uppercase;
+    background: rgba(15,26,46,0.5);
+    backdrop-filter: blur(6px);
+    padding: 5px 10px;
+    border-radius: 999px;
+  }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="img span" style="background-image:url('../assets/equipo.png')" data-label="Equipo Norsolar"></div>
+    <div class="img" style="background-image:url('../assets/hero-andino.png')" data-label="Hero · andino"></div>
+    <div class="img" style="background-image:url('../assets/instalacion-panel-1.jpg')" data-label="Instalación"></div>
+    <div class="img" style="background-image:url('../assets/paneles-techo.jpg')" data-label="Techo"></div>
+    <div class="img" style="background-image:url('../assets/instalacion-panel-3.jpg')" data-label="Industrial"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "a11y-debugging": {
+      "source": "chromedevtools/chrome-devtools-mcp",
+      "sourceType": "github",
+      "skillPath": "skills/a11y-debugging/SKILL.md",
+      "computedHash": "0cfdaa59d1a21f94509d2633a81735f57812c06661b1645a7a7b9dc778e6e0f7"
+    },
+    "converting-css-to-tailwind": {
+      "source": "spencerpauly/awesome-cursor-skills",
+      "sourceType": "github",
+      "skillPath": "resources/converting-css-to-tailwind/SKILL.md",
+      "computedHash": "c5eaabfbaa0407e5d71dcc6a794972bbeea8b2a1c6b603da7e9ceb66b15266d1"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "computedHash": "9e1c8b3103f92fa8092568a44fe64858de7c5c9dc65ce4bea8f168080e889cfd"
+    },
+    "skill-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "computedHash": "5ea13a6d9f0d4bb694405d79acd00cadec0d21bb138c4dd10fcf3c500cb835c2"
+    },
+    "wcag-accessibility-audit": {
+      "source": "mastepanoski/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/wcag-accessibility-audit/SKILL.md",
+      "computedHash": "dbf9f85d025630e0ecf0a9e37f08639b5c759ea1662b48dd9b1001b720050c02"
+    }
+  }
+}

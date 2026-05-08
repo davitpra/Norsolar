@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Iconography</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 28px; background: #fff; font-family: var(--font-body); }
+  .row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 14px; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .icon-box {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--ns-orange-soft);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .icon-box svg { stroke: var(--ns-orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .label { font-family: var(--font-display); font-weight: 600; font-size: 10px; color: var(--ns-navy); letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item">
+      <div class="icon-box"><svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg></div>
+      <span class="label">Solar</span>
+    </div>
+    <div class="item">
+      <div class="icon-box"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <span class="label">Seguridad</span>
+    </div>
+    <div class="item">
+      <div class="icon-box"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+      <span class="label">Eficiencia</span>
+    </div>
+    <div class="item">
+      <div class="icon-box"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></div>
+      <span class="label">Hogar</span>
+    </div>
+    <div class="item">
+      <div class="icon-box"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 21V9l6 4V9l6 4V9l6 4v8z"/></svg></div>
+      <span class="label">Industria</span>
+    </div>
+    <div class="item">
+      <div class="icon-box"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-8 8-11 5 3 8 7 8 11a7 7 0 0 1-7 7z"/><path d="M11 20v-9"/></svg></div>
+      <span class="label">Sostenible</span>
+    </div>
+    <div class="item">
+      <div class="icon-box"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+      <span class="label">Servicio</span>
+    </div>
+  </div>
+</body>
+</html>

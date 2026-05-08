@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Shadows</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 36px 32px; background: var(--ns-bg-alt); font-family: var(--font-body); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; align-items: center; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .box {
+    width: 110px; height: 80px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+  }
+  .name { font-family: var(--font-display); font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ns-navy); }
+  .meta { font-family: ui-monospace, monospace; font-size: 10px; color: var(--ns-text-muted); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item">
+      <div class="box" style="box-shadow: 0 1px 2px rgba(15,26,46,0.06)"></div>
+      <div class="name">Shadow 1</div>
+      <div class="meta">subtle · cards</div>
+    </div>
+    <div class="item">
+      <div class="box" style="box-shadow: 0 4px 12px rgba(15,26,46,0.08)"></div>
+      <div class="name">Shadow 2</div>
+      <div class="meta">default · cards</div>
+    </div>
+    <div class="item">
+      <div class="box" style="box-shadow: 0 12px 32px rgba(15,26,46,0.12)"></div>
+      <div class="name">Shadow 3</div>
+      <div class="meta">hover · floating</div>
+    </div>
+    <div class="item">
+      <div class="box" style="box-shadow: 0 24px 60px rgba(15,26,46,0.18)"></div>
+      <div class="name">Shadow 4</div>
+      <div class="meta">modal · hero card</div>
+    </div>
+  </div>
+</body>
+</html>

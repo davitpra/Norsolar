@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Process Step Card</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 20px; background: #fff; font-family: var(--font-body); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .step {
+    position: relative;
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    color: #fff;
+    background-size: cover;
+    background-position: center;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 18px;
+  }
+  .step::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(15,26,46,0.2) 0%, rgba(15,26,46,0.95) 100%);
+  }
+  .step > * { position: relative; }
+  .num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--ns-orange);
+    margin-bottom: auto;
+    align-self: flex-start;
+  }
+  .h {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 1.1;
+    margin: 0 0 6px;
+    text-transform: none;
+  }
+  .d {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 0;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="step" style="background-image:url('../assets/equipo-trabajando.jpg')">
+      <span class="num">01</span>
+      <h4 class="h">Consulta gratuita</h4>
+      <p class="d">Analizamos su consumo y diseñamos la solución ideal.</p>
+    </div>
+    <div class="step" style="background-image:url('../assets/instalacion.jpg')">
+      <span class="num">02</span>
+      <h4 class="h">Diseño personalizado</h4>
+      <p class="d">Ingeniería a medida para su techo y necesidades.</p>
+    </div>
+    <div class="step" style="background-image:url('../assets/instalacion-panel-1.jpg')">
+      <span class="num">03</span>
+      <h4 class="h">Instalación profesional</h4>
+      <p class="d">Productos certificados, sin complicaciones.</p>
+    </div>
+    <div class="step" style="background-image:url('../assets/paneles-techo.jpg')">
+      <span class="num">04</span>
+      <h4 class="h">Monitoreo 24/7</h4>
+      <p class="d">Controle su producción desde el celular.</p>
+    </div>
+  </div>
+</body>
+</html>

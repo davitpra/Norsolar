@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Stat Card</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 24px; background: var(--ns-bg-alt); font-family: var(--font-body); }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 12px rgba(15,26,46,0.06);
+  }
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--ns-text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .badge {
+    background: var(--ns-success-soft);
+    color: var(--ns-success);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+  }
+  .num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--ns-orange);
+    letter-spacing: -0.02em;
+  }
+  .lbl {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--ns-text-muted);
+    margin-top: 6px;
+  }
+  .alt-card {
+    background: var(--ns-orange);
+    color: #fff;
+  }
+  .alt-card .num { color: #fff; }
+  .alt-card .top, .alt-card .lbl { color: rgba(255,255,255,0.85); }
+  .alt-card .badge { background: rgba(255,255,255,0.2); color: #fff; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="card">
+      <div class="top"><span>Demanda 2024</span><span class="badge">+325%</span></div>
+      <div class="num">325%</div>
+      <div class="lbl">más demanda en 2024</div>
+    </div>
+    <div class="card alt-card">
+      <div class="top"><span>Proyectos</span><span class="badge">Activo</span></div>
+      <div class="num">+250</div>
+      <div class="lbl">instalaciones en Ecuador</div>
+    </div>
+    <div class="card">
+      <div class="top"><span>Satisfacción</span><span class="badge">★ 4.9</span></div>
+      <div class="num">+90%</div>
+      <div class="lbl">clientes recomiendan</div>
+    </div>
+  </div>
+</body>
+</html>

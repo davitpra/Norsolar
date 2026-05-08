@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Norsolar · Body & Quote</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 28px 36px; background: #fff; font-family: var(--font-body); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+  .label {
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--ns-text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ns-navy);
+    margin: 0;
+  }
+  .quote {
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ns-navy);
+    margin: 0;
+    position: relative;
+    padding-left: 22px;
+  }
+  .quote::before {
+    content: "\201C";
+    position: absolute;
+    left: 0;
+    top: -4px;
+    color: var(--ns-orange);
+    font-size: 36px;
+    font-family: var(--font-display);
+    line-height: 1;
+  }
+  .source {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--ns-text-muted);
+    font-family: var(--font-body);
+  }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div>
+      <div class="label">BODY · INTER REGULAR 16/1.7</div>
+      <p class="body">Expertos en soluciones fotovoltaicas para hogares, comercios e industrias en Ecuador. Ahorre hasta un 90% en su planilla eléctrica.</p>
+    </div>
+    <div>
+      <div class="label">TESTIMONIAL · 18/1.55</div>
+      <p class="quote">Gracias a Norsolar redujimos nuestra planilla casi a cero. Excelente asesoría y cumplieron todo lo prometido.</p>
+      <div class="source">— María Fernanda R., Hogar — Ibarra</div>
+    </div>
+  </div>
+</body>
+</html>

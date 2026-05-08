@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ---- Font faces ---- */
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Montserrat-ExtraBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Montserrat-SemiBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/Inter-Regular.ttf") format("truetype");
+}
+
+/* ---- Design tokens ---- */
+@theme {
+  --color-ns-orange:       #F28C28;
+  --color-ns-orange-hover: #E07B1A;
+  --color-ns-orange-soft:  #FDE4CB;
+  --color-ns-navy:         #1B2A4A;
+  --color-ns-navy-2:       #2D4470;
+  --color-ns-navy-deep:    #0F1A2E;
+  --color-ns-muted:        #6B7280;
+  --color-ns-bg-alt:       #F7F8FA;
+  --color-ns-border:       #E5E7EB;
+  --color-ns-success:      #22C55E;
+  --color-ns-success-soft: #DCFCE7;
+
+  --font-display: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --font-body:    "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  --breakpoint-tablet: 960px;
+
+  --animate-ns-float: nsFloat 6s ease-in-out infinite;
+  --keyframes-nsFloat-0: { transform: translateY(0); };
+  --keyframes-nsFloat-50: { transform: translateY(-6px); };
+  --keyframes-nsFloat-100: { transform: translateY(0); };
+}
+
+/* Keyframes (v4 @theme keyframes syntax not yet stable — define here) */
+@keyframes nsFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+/* ---- Global resets ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+a { color: inherit; }
+body {
+  font-family: var(--font-body, "Inter", sans-serif);
+  color: #1B2A4A;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Reusable component classes ---- */
+@layer components {
+  .ns-container {
+    @apply max-w-[1240px] mx-auto px-8 relative;
+  }
+  .ns-section {
+    @apply py-[100px] relative;
+  }
+  .ns-eyebrow {
+    @apply font-display font-semibold text-[12px] tracking-[0.22em] uppercase text-ns-orange inline-flex items-center gap-[10px] mb-[18px];
+  }
+  .ns-eyebrow::before {
+    content: "";
+    @apply w-[7px] h-[7px] border-[1.5px] border-current rounded-full shrink-0;
+  }
+  .ns-display-h {
+    font-size: clamp(40px, 5.5vw, 72px);
+    @apply font-display font-extrabold uppercase leading-none tracking-[-0.02em] text-ns-navy m-0 mb-7;
+  }
+  .ns-body-lg {
+    @apply font-body text-[17px] leading-[1.7] text-ns-muted m-0 mb-6 max-w-[460px];
+  }
+  .ns-btn {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-[10px] font-display font-semibold text-[14px] tracking-[0.02em] no-underline cursor-pointer transition-all duration-200 border-0 whitespace-nowrap;
+  }
+  .ns-btn-sm {
+    @apply px-[22px] py-3 text-[13px];
+  }
+  .ns-btn-primary {
+    @apply bg-ns-orange text-white hover:bg-ns-orange-hover;
+  }
+  .ns-btn-outline-light {
+    @apply bg-transparent text-white border-[1.5px] border-white/85 hover:bg-white hover:text-ns-navy;
+  }
+  .ns-btn-block {
+    @apply w-full py-[18px] text-[15px];
+  }
+  .ns-btn-ghost-dark {
+    @apply bg-transparent border-0 text-ns-navy font-display font-semibold text-[13px] cursor-pointer px-3 py-2 transition-colors duration-[180ms] hover:text-ns-orange disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .ns-link {
+    @apply font-display font-semibold text-[13px] text-ns-orange no-underline;
+  }
+  .ns-input {
+    @apply bg-white border border-ns-border rounded-[10px] px-[18px] py-4 font-body text-[14px] text-ns-navy outline-none transition-[border-color,box-shadow] duration-[180ms] placeholder:text-ns-muted focus:border-ns-orange focus:shadow-[0_0_0_3px_rgba(242,140,40,0.18)];
+  }
+  .ns-input-full {
+    @apply w-full;
+  }
+}
+
+/* ---- Scroll reveal (JS-controlled) ---- */
+.ns-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 600ms cubic-bezier(0.22,1,0.36,1), transform 600ms cubic-bezier(0.22,1,0.36,1);
+}
+.ns-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Select custom dropdown arrow ---- */
+select.ns-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%231B2A4A' d='M6 8L0 0h12z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+
+@media (max-width: 600px) {
+  .ns-section { padding: 64px 0; }
+}
