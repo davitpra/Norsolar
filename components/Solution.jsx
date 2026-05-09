@@ -15,6 +15,7 @@ export default function NSSolution() {
   const [tipo, setTipo] = useState('residencial');
   const [consumo, setConsumo] = useState('');
   const [ciudad, setCiudad] = useState('');
+  const [tarifa, setTarifa] = useState('');
   const [resultado, setResultado] = useState(null);
   const resultsRef = useRef(null);
 
@@ -26,9 +27,10 @@ export default function NSSolution() {
 
   const handleCalcular = () => {
     const val = parseFloat(consumo);
-    if (!val || val <= 0) return;
+    const tar = parseFloat(tarifa);
+    if (!val || val <= 0 || !tar || tar <= 0) return;
     const kit = recommendKit(val);
-    const projection = computeSavingsProjection({ consumo: val, tipo, kit });
+    const projection = computeSavingsProjection({ consumo: val, tipo, kit, tariff: tar });
     setResultado({ kit, ...projection });
   };
 
@@ -83,18 +85,22 @@ export default function NSSolution() {
                 <label className="font-body text-white/70 text-[13px]">
                   Tipo de cliente
                 </label>
-                <div className="grid grid-cols-2 gap-2">
-                  {['residencial', 'comercial'].map((t) => (
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { value: 'residencial', label: 'Residencial' },
+                    { value: 'comercial',   label: 'Comercial' },
+                    { value: 'industrial',  label: 'Industrial' },
+                  ].map(({ value, label }) => (
                     <button
-                      key={t}
-                      onClick={() => { setTipo(t); setResultado(null); }}
-                      className={`rounded-lg border py-2 text-[13px] font-display font-semibold capitalize transition-colors ${
-                        tipo === t
+                      key={value}
+                      onClick={() => { setTipo(value); setResultado(null); }}
+                      className={`rounded-lg border py-2 text-[12px] font-display font-semibold transition-colors ${
+                        tipo === value
                           ? 'border-ns-orange bg-ns-orange text-white'
                           : 'border-white/20 bg-white/10 text-white/70 hover:bg-white/20'
                       }`}
                     >
-                      {t === 'residencial' ? 'Residencial' : 'Comercial'}
+                      {label}
                     </button>
                   ))}
                 </div>
@@ -111,6 +117,22 @@ export default function NSSolution() {
                   placeholder="Ej: 350"
                   value={consumo}
                   onChange={(e) => { setConsumo(e.target.value); setResultado(null); }}
+                  className="ns-input bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-ns-orange"
+                />
+              </div>
+
+              {/* Tarifa eléctrica */}
+              <div className="flex flex-col gap-1.5">
+                <label className="font-body text-white/70 text-[13px]">
+                  Tarifa eléctrica (USD/kWh)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="Ej: 0.18"
+                  value={tarifa}
+                  onChange={(e) => { setTarifa(e.target.value); setResultado(null); }}
                   className="ns-input bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-ns-orange"
                 />
               </div>
@@ -150,14 +172,14 @@ export default function NSSolution() {
               {/* CTA */}
               <button
                 onClick={handleCalcular}
-                disabled={!consumo || parseFloat(consumo) <= 0}
+                disabled={!consumo || parseFloat(consumo) <= 0 || !tarifa || parseFloat(tarifa) <= 0}
                 className="ns-btn ns-btn-primary ns-btn-block mt-auto disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Calcular Ahorro
               </button>
 
               <p className="font-body text-white/40 text-[11px] text-center">
-                * Cálculo referencial basado en tarifas CNEL 2024
+                * Cálculo referencial. Ingrese la tarifa de su planilla.
               </p>
             </div>
 
@@ -165,7 +187,11 @@ export default function NSSolution() {
         </div>
       </section>
 
-      <SavingsResults ref={resultsRef} resultado={resultado} />
+      <SavingsResults
+        ref={resultsRef}
+        monthlyBill={resultado ? parseFloat(consumo) * parseFloat(tarifa) : undefined}
+        kitPower={resultado?.kit?.potencia}
+      />
     </>
   );
 }

@@ -1,28 +1,22 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NSHeader from "@/components/Header";
 import NSHero from "@/components/Hero";
 import NSBand from "@/components/Band";
 import NSBrandBar from "@/components/BrandBar";
 import NSWhy from "@/components/Why";
-import NSProcess from "@/components/Process";
 import NSProjects from "@/components/Projects";
 import NSQuoteForm from "@/components/QuoteForm";
 import NSTestimonials from "@/components/Testimonials";
 import NSProblema from "@/components/Problema";
-import NSSolution from "@/components/Solution";
+import NSSavingsResults from "@/components/SavingsResults";
 import NSFooter from "@/components/Footer";
 import NSWhatsAppFab from "@/components/WhatsAppFab";
+import NSSolution from "@/components/Solution";
 
 export default function Page() {
-  const scrollToCotiza = () => {
-    const el = document.getElementById("cotiza");
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 60;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
+  const [monthlyBill, setMonthlyBill] = useState(80);
 
   useEffect(() => {
     const els = document.querySelectorAll(
@@ -51,13 +45,12 @@ export default function Page() {
         <NSHero />
         <NSBand />
         <NSProblema />
-        <NSSolution />
+        <NSSolution/>
         <NSBrandBar />
         <NSTestimonials />
         <NSWhy />
-        <NSProcess onCotizar={scrollToCotiza} />
         <NSProjects />
-        <NSQuoteForm id="cotiza" />
+        <NSQuoteForm id="cotiza" onCalculate={setMonthlyBill} />
       </main>
       <NSFooter />
       <NSWhatsAppFab />

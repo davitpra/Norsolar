@@ -9,13 +9,21 @@ const BADGES = [
   { Icon: ShieldCheckIcon, label: 'Protección solar' },
 ];
 
-export default function NSQuoteForm({ id }) {
+export default function NSQuoteForm({ id, onCalculate }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
-    nombre: '', telefono: '', correo: '', ciudad: '', tipo: '',
+    nombre: '', telefono: '', correo: '', ciudad: '', tipo: '', factura: '',
   });
 
   const upd = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+
+  const updFactura = (e) => {
+    const v = e.target.value;
+    setForm((f) => ({ ...f, factura: v }));
+    const parsed = Number(v);
+    if (!Number.isNaN(parsed) && parsed > 0) onCalculate?.(parsed);
+  };
+
   const submit = (e) => { e.preventDefault(); setSubmitted(true); };
 
   return (
@@ -110,6 +118,16 @@ export default function NSQuoteForm({ id }) {
                     value={form.correo}
                     onChange={upd('correo')}
                     required
+                  />
+                  <input
+                    className="ns-input"
+                    type="number"
+                    inputMode="decimal"
+                    placeholder="Factura mensual actual ($)"
+                    value={form.factura}
+                    onChange={updFactura}
+                    min="0"
+                    step="1"
                   />
                   <div className="grid grid-cols-2 gap-3">
                     <div>

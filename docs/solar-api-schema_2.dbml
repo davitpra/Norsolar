@@ -1,0 +1,344 @@
+// Solar Calculator API — Database Schema
+// Para usar en dbdiagram.io
+
+// ============================================
+// DATOS DE REFERENCIA (configuración del sistema)
+// ============================================
+
+Table cities {
+  id varchar [pk]
+  name varchar [not null, unique]
+  province varchar [not null]
+  region region_enum [not null]
+  latitude decimal(10,6) [not null]
+  longitude decimal(10,6) [not null]
+  hsp_annual decimal(4,2) [not null, note: 'Horas Sol Pico promedio anual']
+  distributor_id varchar [ref: > distributors.id]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+Enum region_enum {
+  sierra
+  costa
+  oriente
+  insular
+}
+
+Table city_monthly_irradiance {
+  id varchar [pk]
+  city_id varchar [ref: > cities.id, not null]
+  month int [not null, note: '1-12']
+  hsp decimal(4,2) [not null, note: 'HSP del mes específico']
+  factor decimal(4,2) [not null, note: 'Factor multiplicador vs promedio anual']
+
+  indexes {
+    (city_id, month) [unique]
+  }
+}
+
+Table distributors {
+  id varchar [pk]
+  name varchar [not null]
+  code varchar [unique, note: 'EEQ, CNEL-GYE, CENTROSUR, etc.']
+  created_at timestamp [default: `now()`]
+}
+
+// ============================================
+// TARIFAS ELÉCTRICAS
+// ============================================
+
+Table tariff_schedules {
+  id varchar [pk]
+  distributor_id varchar [ref: > distributors.id, not null]
+  customer_type customer_type_enum [not null]
+  voltage_level voltage_level_enum [not null]
+  valid_from date [not null]
+  valid_until date
+  resolution varchar [note: 'Ej: ARCONEL-022/2024']
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+
+  indexes {
+    (distributor_id, customer_type, voltage_level, is_active)
+  }
+}
+
+Enum customer_type_enum {
+  residencial
+  comercial
+  industrial
+}
+
+Enum voltage_level_enum {
+  bajo_voltaje
+  medio_voltaje
+  alto_voltaje_av1
+  alto_voltaje_av2
+}
+
+Table tariff_ranges {
+  id varchar [pk]
+  schedule_id varchar [ref: > tariff_schedules.id, not null]
+  min_kwh int [not null]
+  max_kwh int [note: 'null = sin límite']
+  energy_rate decimal(6,4) [not null, note: 'USD/kWh']
+  demand_rate decimal(6,3) [note: 'USD/kW-mes, aplica comercial/industrial']
+  description varchar
+
+  indexes {
+    (schedule_id, min_kwh)
+  }
+}
+
+// ============================================
+// CATÁLOGO DE PRODUCTOS
+// ============================================
+
+Table panel_models {
+  id varchar [pk]
+  brand varchar [not null]
+  model varchar [not null]
+  watts int [not null, note: 'Potencia pico en Wp']
+  efficiency decimal(4,2) [note: 'Porcentaje ej: 21.5']
+  area_m2 decimal(4,2) [not null, note: 'Área física del panel']
+  warranty_years int [default: 25]
+  tier varchar [note: 'Tier 1, Tier 2']
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+
+  indexes {
+    (brand, model) [unique]
+  }
+}
+
+Table inverter_models {
+  id varchar [pk]
+  brand varchar [not null]
+  model varchar [not null]
+  power_kw decimal(6,2) [not null]
+  type inverter_type_enum [not null]
+  phases int [default: 1, note: '1 o 3']
+  max_pv_input_kw decimal(6,2)
+  efficiency decimal(4,2) [note: 'Porcentaje ej: 97.5']
+  warranty_years int [default: 10]
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+
+  indexes {
+    (brand, model) [unique]
+  }
+}
+
+Enum inverter_type_enum {
+  on_grid
+  hybrid
+  off_grid
+}
+
+Table battery_models {
+  id varchar [pk]
+  brand varchar [not null]
+  model varchar [not null]
+  capacity_kwh decimal(6,2) [not null]
+  chemistry varchar [default: 'LiFePO4']
+  cycles int [note: 'Ciclos de vida útil']
+  warranty_years int [default: 10]
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+
+  indexes {
+    (brand, model) [unique]
+  }
+}
+
+// ============================================
+// KITS SOLARES (combinaciones de productos)
+// ============================================
+
+Table solar_kits {
+  id varchar [pk]
+  name varchar [not null]
+  slug varchar [unique]
+  description text
+  target customer_type_enum [not null]
+  system_type inverter_type_enum [not null]
+  power_kwp decimal(6,2) [not null, note: 'Potencia total del kit en kWp']
+  panel_model_id varchar [ref: > panel_models.id, not null]
+  panel_quantity int [not null]
+  inverter_model_id varchar [ref: > inverter_models.id, not null]
+  battery_model_id varchar [ref: > battery_models.id, note: 'null si no incluye batería']
+  battery_quantity int [default: 0]
+  price_usd decimal(10,2) [not null]
+  installation_included boolean [default: true]
+  roof_area_required_m2 decimal(6,2) [not null]
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+
+  indexes {
+    (target, power_kwp)
+    (is_active)
+  }
+}
+
+// ============================================
+// FACTORES DEL SISTEMA (configuración global)
+// ============================================
+
+Table system_config {
+  id varchar [pk]
+  key varchar [unique, not null]
+  value decimal(10,6) [not null]
+  unit varchar
+  description varchar
+  source varchar [note: 'Fuente del dato']
+  source_url varchar
+  valid_from date
+  updated_at timestamp [default: `now()`]
+}
+
+// Registros esperados en system_config:
+// panel_degradation_per_year    | 0.005    | %/año
+// system_losses_sierra          | 0.20     | %
+// system_losses_costa           | 0.22     | %
+// co2_factor_kg_per_kwh         | 0.3353   | kg CO2/kWh
+// electricity_inflation_rate    | 0.03     | %/año
+// system_lifespan_years         | 25       | años
+// cost_per_wp_residential       | 1.20     | USD/Wp
+// cost_per_wp_commercial        | 1.00     | USD/Wp
+// cost_per_wp_industrial        | 0.85     | USD/Wp
+
+// ============================================
+// LEADS / COTIZACIONES (datos del usuario)
+// ============================================
+
+Table leads {
+  id varchar [pk]
+  company_name varchar
+  contact_name varchar [not null]
+  email varchar [not null]
+  phone varchar
+  position varchar [note: 'Cargo del contacto']
+  city_id varchar [ref: > cities.id, not null]
+  customer_type customer_type_enum [not null]
+  sector sector_enum
+  status lead_status_enum [default: 'new']
+  source varchar [note: 'landing, referral, organic, etc.']
+  utm_source varchar
+  utm_medium varchar
+  utm_campaign varchar
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+
+  indexes {
+    (email)
+    (status)
+    (created_at)
+  }
+}
+
+Enum sector_enum {
+  siderurgia
+  cemento
+  mineria
+  alimentos_bebidas
+  quimicos
+  logistica
+  textil
+  agricola
+  comercio
+  otro
+}
+
+Enum lead_status_enum {
+  new
+  contacted
+  qualified
+  proposal_sent
+  negotiation
+  won
+  lost
+}
+
+Table calculations {
+  id varchar [pk]
+  lead_id varchar [ref: > leads.id, note: 'null si es anónimo']
+  session_id varchar [note: 'Para tracking anónimo']
+  city_id varchar [ref: > cities.id, not null]
+  customer_type customer_type_enum [not null]
+  monthly_consumption_kwh int [not null]
+  current_tariff_usd decimal(6,4) [not null]
+
+  // Resultados calculados
+  recommended_kit_id varchar [ref: > solar_kits.id]
+  system_size_kwp decimal(6,2) [not null]
+  monthly_generation_kwh decimal(10,2) [not null]
+  annual_generation_kwh decimal(10,2) [not null]
+  coverage_percentage decimal(5,2) [not null]
+  monthly_savings_usd decimal(10,2) [not null]
+  annual_savings_usd decimal(10,2) [not null]
+  total_savings_25y_usd decimal(12,2) [not null]
+  roi_years decimal(4,1) [not null]
+  co2_reduction_annual_tons decimal(6,2) [not null]
+  co2_reduction_25y_tons decimal(8,2) [not null]
+  estimated_investment_usd decimal(10,2) [not null]
+
+  created_at timestamp [default: `now()`]
+
+  indexes {
+    (lead_id)
+    (session_id)
+    (created_at)
+    (city_id, customer_type)
+  }
+}
+
+Table calculation_monthly_breakdown {
+  id varchar [pk]
+  calculation_id varchar [ref: > calculations.id, not null]
+  month int [not null, note: '1-12']
+  generation_kwh decimal(10,2) [not null]
+  consumption_kwh decimal(10,2) [not null]
+  cost_without_solar_usd decimal(8,2) [not null]
+  cost_with_solar_usd decimal(8,2) [not null]
+  savings_usd decimal(8,2) [not null]
+
+  indexes {
+    (calculation_id, month) [unique]
+  }
+}
+
+// ============================================
+// ANALYTICS
+// ============================================
+
+Table page_events {
+  id varchar [pk]
+  session_id varchar [not null]
+  event_type event_type_enum [not null]
+  event_data json [note: 'Datos adicionales del evento']
+  city_id varchar [ref: > cities.id]
+  customer_type customer_type_enum
+  ip_hash varchar [note: 'Hash del IP, no el IP real']
+  user_agent varchar
+  referrer varchar
+  created_at timestamp [default: `now()`]
+
+  indexes {
+    (session_id)
+    (event_type)
+    (created_at)
+  }
+}
+
+Enum event_type_enum {
+  page_view
+  calculator_started
+  calculator_completed
+  kit_viewed
+  form_started
+  form_submitted
+  cta_clicked
+  pdf_downloaded
+}
