@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { BoltIcon, SunIcon, ShieldCheckIcon } from '@heroicons/react/24/solid';
 import type { ComponentType, SVGProps } from 'react';
+import type { CustomerType } from '@/lib/solar/types';
 
 interface Badge {
   Icon: ComponentType<SVGProps<SVGSVGElement> & { className?: string }>;
@@ -21,31 +22,65 @@ interface FormState {
   correo: string;
   ciudad: string;
   tipo: string;
-  factura: string;
 }
 
 interface QuoteFormProps {
   id?: string;
+  calculationId?: string;
+  prefill?: {
+    ciudad?: string;
+    tipo?: CustomerType;
+    consumo?: number;
+  };
+  // Legacy prop kept for Solution.tsx compatibility
   onCalculate?: (value: number) => void;
 }
 
-export default function NSQuoteForm({ id, onCalculate }: QuoteFormProps) {
+export default function NSQuoteForm({ id, calculationId, prefill }: QuoteFormProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [leadId, setLeadId] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>({
-    nombre: '', telefono: '', correo: '', ciudad: '', tipo: '', factura: '',
+    nombre: '',
+    telefono: '',
+    correo: '',
+    ciudad: prefill?.ciudad ?? '',
+    tipo: prefill?.tipo ?? '',
   });
 
   const upd = (k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm({ ...form, [k]: e.target.value });
 
-  const updFactura = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const v = e.target.value;
-    setForm((f) => ({ ...f, factura: v }));
-    const parsed = Number(v);
-    if (!Number.isNaN(parsed) && parsed > 0) onCalculate?.(parsed);
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          contact_name: form.nombre,
+          email: form.correo,
+          phone: form.telefono || undefined,
+          city: form.ciudad || 'Ibarra',
+          customer_type: (form.tipo.toLowerCase() as CustomerType) || 'residencial',
+          monthly_consumption_kwh: prefill?.consumo,
+          source: 'landing',
+          calculation_id: calculationId,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
+      setLeadId(data.id);
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Error al enviar');
+    } finally {
+      setSubmitting(false);
+    }
   };
-
-  const submit = (e: React.FormEvent) => { e.preventDefault(); setSubmitted(true); };
 
   return (
     <section
@@ -75,10 +110,10 @@ export default function NSQuoteForm({ id, onCalculate }: QuoteFormProps) {
               className="font-display font-extrabold text-white tracking-[-0.02em] leading-none m-0 mt-3 mb-5"
               style={{ fontSize: 'clamp(36px, 4.5vw, 60px)' }}
             >
-              No esperes al<br />próximo apagón
+              No espere al<br />próximo apagón
             </h2>
             <p className="font-body text-[16px] leading-[1.65] text-white/70 m-0 mb-8 max-w-[440px]">
-              Da el primer paso hacia la independencia energética. Calcula tu ahorro y recibe tu propuesta personalizada.
+              Da el primer paso hacia la independencia energética. Calcule su ahorro y reciba su propuesta personalizada.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -102,15 +137,21 @@ export default function NSQuoteForm({ id, onCalculate }: QuoteFormProps) {
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4L12 14.01l-3-3" />
                   </svg>
                 </div>
-                <h3 className="font-display font-extrabold text-ns-navy m-0 mb-2 text-[20px]">¡Cotización recibida!</h3>
-                <p className="font-body text-ns-muted text-[14px] m-0">
-                  Nuestro equipo lo contactará en menos de 24 horas, {form.nombre || 'estimado/a'}.
+                <h3 className="font-display font-extrabold text-ns-navy m-0 mb-2 text-[20px]">¡Solicitud recibida!</h3>
+                <p className="font-body text-ns-muted text-[14px] m-0 mb-3">
+                  Nuestro equipo le contactará en menos de 48 horas, {form.nombre || 'estimado/a'}.
                 </p>
+                {leadId && (
+                  <p className="font-body text-ns-muted text-[11px] m-0">
+                    Referencia:{' '}
+                    <span className="font-mono text-ns-navy">{leadId.slice(0, 8).toUpperCase()}</span>
+                  </p>
+                )}
               </div>
             ) : (
               <>
                 <p className="font-display font-extrabold text-ns-navy text-[18px] m-0 mb-5 leading-snug">
-                  Recibe tu cotización gratuita
+                  Reciba su cotización gratuita
                 </p>
                 <form className="flex flex-col gap-3" onSubmit={submit}>
                   <input
@@ -135,23 +176,14 @@ export default function NSQuoteForm({ id, onCalculate }: QuoteFormProps) {
                     onChange={upd('correo')}
                     required
                   />
-                  <input
-                    className="ns-input"
-                    type="number"
-                    inputMode="decimal"
-                    placeholder="Factura mensual actual ($)"
-                    value={form.factura}
-                    onChange={updFactura}
-                    min="0"
-                    step="1"
-                  />
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label htmlFor="q-ciudad" className="sr-only">Ciudad</label>
                       <select id="q-ciudad" className="ns-input w-full" value={form.ciudad} onChange={upd('ciudad')} required>
                         <option value="">Ciudad</option>
                         <option>Ibarra</option><option>Quito</option><option>Guayaquil</option>
-                        <option>Cuenca</option><option>Otavalo</option><option>Otra</option>
+                        <option>Cuenca</option><option>Ambato</option><option>Manta</option>
+                        <option>Loja</option><option>Riobamba</option><option>Otra</option>
                       </select>
                     </div>
                     <div>
@@ -159,12 +191,19 @@ export default function NSQuoteForm({ id, onCalculate }: QuoteFormProps) {
                       <select id="q-tipo" className="ns-input w-full" value={form.tipo} onChange={upd('tipo')} required>
                         <option value="">Solución</option>
                         <option>Residencial</option><option>Comercial</option>
-                        <option>Industrial</option><option>Baterías</option>
+                        <option>Industrial</option>
                       </select>
                     </div>
                   </div>
-                  <button type="submit" className="ns-btn ns-btn-primary ns-btn-block mt-1">
-                    Quiero mi cotización gratuita
+                  {submitError && (
+                    <p className="font-body text-red-500 text-[12px] m-0">{submitError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    className="ns-btn ns-btn-primary ns-btn-block mt-1"
+                    disabled={submitting}
+                  >
+                    {submitting ? 'Enviando…' : 'Quiero mi cotización gratuita'}
                   </button>
                   <p className="font-body text-ns-muted text-[11px] text-center m-0 leading-snug">
                     Sin compromiso. Sus datos están protegidos y no serán compartidos.

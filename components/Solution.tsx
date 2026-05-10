@@ -1,30 +1,41 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
-import NSKitsCarousel from './KitsCarousel';
-import SavingsResults from './SavingsResults';
-import { recommendKit, computeSavingsProjection } from '@/lib/kits';
-import type { Kit, SavingsProjection } from '@/lib/kits';
+import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
+import NSKitsCarousel from "./KitsCarousel";
+import SavingsResults from "./SavingsMonthly";
+import { recommendKit, computeSavingsProjection } from "@/lib/kits";
+import type { Kit, SavingsProjection } from "@/lib/kits";
 
 const ciudades = [
-  'Ibarra', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato',
-  'Riobamba', 'Loja', 'Esmeraldas', 'Manta', 'Santo Domingo',
+  "Ibarra",
+  "Quito",
+  "Guayaquil",
+  "Cuenca",
+  "Ambato",
+  "Riobamba",
+  "Loja",
+  "Esmeraldas",
+  "Manta",
+  "Santo Domingo",
 ];
 
 type Resultado = SavingsProjection & { kit: Kit };
 
 export default function NSSolution() {
-  const [tipo, setTipo] = useState('residencial');
-  const [consumo, setConsumo] = useState('');
-  const [ciudad, setCiudad] = useState('');
-  const [tarifa, setTarifa] = useState('');
+  const [tipo, setTipo] = useState("residencial");
+  const [consumo, setConsumo] = useState("");
+  const [ciudad, setCiudad] = useState("");
+  const [tarifa, setTarifa] = useState("");
   const [resultado, setResultado] = useState<Resultado | null>(null);
   const resultsRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (resultado) {
-      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      resultsRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   }, [resultado]);
 
@@ -33,7 +44,12 @@ export default function NSSolution() {
     const tar = parseFloat(tarifa);
     if (!val || val <= 0 || !tar || tar <= 0) return;
     const kit = recommendKit(val);
-    const projection = computeSavingsProjection({ consumo: val, tipo, kit, tariff: tar });
+    const projection = computeSavingsProjection({
+      consumo: val,
+      tipo,
+      kit,
+      tariff: tar,
+    });
     setResultado({ kit, ...projection });
   };
 
@@ -41,7 +57,6 @@ export default function NSSolution() {
     <>
       <section className="ns-section bg-white">
         <div className="ns-container">
-
           <div className="mb-12">
             <span className="ns-eyebrow">LA SOLUCIÓN</span>
             <h2 className="ns-display-h-md mt-4">
@@ -50,7 +65,6 @@ export default function NSSolution() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 tablet:grid-cols-3">
-
             <NSKitsCarousel />
 
             <div className="rounded-2xl border border-ns-border bg-white p-8 shadow-sm flex flex-col gap-4">
@@ -84,17 +98,20 @@ export default function NSSolution() {
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { value: 'residencial', label: 'Residencial' },
-                    { value: 'comercial',   label: 'Comercial' },
-                    { value: 'industrial',  label: 'Industrial' },
+                    { value: "residencial", label: "Residencial" },
+                    { value: "comercial", label: "Comercial" },
+                    { value: "industrial", label: "Industrial" },
                   ].map(({ value, label }) => (
                     <button
                       key={value}
-                      onClick={() => { setTipo(value); setResultado(null); }}
+                      onClick={() => {
+                        setTipo(value);
+                        setResultado(null);
+                      }}
                       className={`rounded-lg border py-2 text-[12px] font-display font-semibold transition-colors ${
                         tipo === value
-                          ? 'border-ns-orange bg-ns-orange text-white'
-                          : 'border-white/20 bg-white/10 text-white/70 hover:bg-white/20'
+                          ? "border-ns-orange bg-ns-orange text-white"
+                          : "border-white/20 bg-white/10 text-white/70 hover:bg-white/20"
                       }`}
                     >
                       {label}
@@ -112,7 +129,10 @@ export default function NSSolution() {
                   min="0"
                   placeholder="Ej: 350"
                   value={consumo}
-                  onChange={(e) => { setConsumo(e.target.value); setResultado(null); }}
+                  onChange={(e) => {
+                    setConsumo(e.target.value);
+                    setResultado(null);
+                  }}
                   className="ns-input bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-ns-orange"
                 />
               </div>
@@ -127,7 +147,10 @@ export default function NSSolution() {
                   step="0.01"
                   placeholder="Ej: 0.18"
                   value={tarifa}
-                  onChange={(e) => { setTarifa(e.target.value); setResultado(null); }}
+                  onChange={(e) => {
+                    setTarifa(e.target.value);
+                    setResultado(null);
+                  }}
                   className="ns-input bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-ns-orange"
                 />
               </div>
@@ -141,9 +164,13 @@ export default function NSSolution() {
                   onChange={(e) => setCiudad(e.target.value)}
                   className="ns-input bg-white/10 border-white/20 text-white focus:border-ns-orange [&>option]:text-ns-navy"
                 >
-                  <option value="" disabled>Seleccione</option>
+                  <option value="" disabled>
+                    Seleccione
+                  </option>
                   {ciudades.map((c) => (
-                    <option key={c} value={c}>{c}</option>
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -154,7 +181,8 @@ export default function NSSolution() {
                     Su ahorro estimado mensual
                   </p>
                   <p className="font-display font-extrabold text-ns-success text-[32px] leading-tight mt-1">
-                    ${resultado.monthlyRange.min} – ${resultado.monthlyRange.max}
+                    ${resultado.monthlyRange.min} – $
+                    {resultado.monthlyRange.max}
                   </p>
                   <p className="font-body text-white/50 text-[12px] mt-1">
                     ↓ Ver proyección completa abajo
@@ -164,7 +192,12 @@ export default function NSSolution() {
 
               <button
                 onClick={handleCalcular}
-                disabled={!consumo || parseFloat(consumo) <= 0 || !tarifa || parseFloat(tarifa) <= 0}
+                disabled={
+                  !consumo ||
+                  parseFloat(consumo) <= 0 ||
+                  !tarifa ||
+                  parseFloat(tarifa) <= 0
+                }
                 className="ns-btn ns-btn-primary ns-btn-block mt-auto disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Calcular Ahorro
@@ -174,14 +207,15 @@ export default function NSSolution() {
                 * Cálculo referencial. Ingrese la tarifa de su planilla.
               </p>
             </div>
-
           </div>
         </div>
       </section>
 
       <SavingsResults
         ref={resultsRef}
-        monthlyBill={resultado ? parseFloat(consumo) * parseFloat(tarifa) : undefined}
+        monthlyBill={
+          resultado ? parseFloat(consumo) * parseFloat(tarifa) : undefined
+        }
         kitPower={resultado?.kit?.potencia}
       />
     </>

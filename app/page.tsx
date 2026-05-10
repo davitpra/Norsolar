@@ -12,14 +12,15 @@ import NSTestimonials from "@/components/Testimonials";
 import NSProblema from "@/components/Problema";
 import NSFooter from "@/components/Footer";
 import NSWhatsAppFab from "@/components/WhatsAppFab";
-import NSSolution from "@/components/Solution";
 import NSInput from "@/components/NSInput";
 import NSKitRecommendation from "@/components/NSKitRecommendation";
+import NSSavingsResults from "@/components/NSSavingsResults";
+import SavingsMonthly from "@/components/SavingsMonthly";
+import NSKitsCarousel from "@/components/KitsCarousel";
+import type { CalculateResponse } from "@/lib/solar/types";
 
 export default function Page() {
-  const [monthlyBill, setMonthlyBill] = useState(80);
-  const [consumo, setConsumo] = useState(345);
-  const [tipo, setTipo] = useState("residencial");
+  const [calc, setCalc] = useState<CalculateResponse | null>(null);
 
   useEffect(() => {
     const els = document.querySelectorAll(
@@ -41,13 +42,6 @@ export default function Page() {
     return () => io.disconnect();
   }, []);
 
-  void monthlyBill;
-
-  const handleInputCalculate = (c: number, _tarifa: number, t: string) => {
-    setConsumo(c);
-    setTipo(t.toLowerCase());
-  };
-
   return (
     <>
       <NSHeader active="INICIO" />
@@ -55,14 +49,16 @@ export default function Page() {
         <NSHero />
         <NSBand />
         <NSProblema />
-        <NSInput onCalculate={handleInputCalculate} />
-        <NSKitRecommendation consumo={consumo} tipo={tipo} />
-        <NSSolution/>
+        <NSInput onCalculate={setCalc} />
+        <NSKitRecommendation recommendation={calc?.recommended_kit} />
+        <NSSavingsResults result={calc} />
+        <SavingsMonthly result={calc} />
+        <NSKitsCarousel result={calc} />
         <NSBrandBar />
         <NSTestimonials />
         <NSWhy />
         <NSProjects />
-        <NSQuoteForm id="cotiza" onCalculate={setMonthlyBill} />
+        <NSQuoteForm id="cotiza" calculationId={calc?.calculation_id} />
       </main>
       <NSFooter />
       <NSWhatsAppFab />

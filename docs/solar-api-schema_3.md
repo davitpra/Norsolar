@@ -172,6 +172,7 @@ Table solar_kits {
   price_usd decimal(10,2) [not null]
   installation_included boolean [default: true]
   roof_area_required_m2 decimal(6,2) [not null]
+  image_url varchar [note: 'Ruta a imagen del kit, ej: /kits/residencial-2kw.webp']
   is_active boolean [default: true]
   created_at timestamp [default: `now()`]
   updated_at timestamp [default: `now()`]
