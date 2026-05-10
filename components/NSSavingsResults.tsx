@@ -6,10 +6,10 @@ import {
   ArrowTrendingUpIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
-import type { CalculateResponse } from "@/lib/solar/types";
+import type { KitOption } from "@/lib/solar/types";
 
 interface NSSavingsResultsProps {
-  result: CalculateResponse | null;
+  kit: KitOption | null;
 }
 
 interface StatCardProps {
@@ -68,8 +68,8 @@ function SkeletonBar() {
   );
 }
 
-export default function NSSavingsResults({ result }: NSSavingsResultsProps) {
-  const s = result?.savings;
+export default function NSSavingsResults({ kit }: NSSavingsResultsProps) {
+  const s = kit?.savings;
   const coverage = s?.coverage_percentage ?? 0;
 
   const fmt = (n: number) =>

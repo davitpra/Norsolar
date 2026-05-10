@@ -12,7 +12,13 @@ export interface CalculateRequest {
 }
 
 // ── API Response ─────────────────────────────────────────────
-export interface RecommendedKit {
+export interface MonthComparison {
+  month: string;
+  without_solar_usd: number;
+  with_solar_usd: number;
+}
+
+export interface KitOption {
   id: string;
   name: string;
   power_kwp: number;
@@ -26,26 +32,6 @@ export interface RecommendedKit {
   price_usd: number;
   roof_area_m2: number;
   image_url: string | null;
-}
-
-export interface AlternativeKit {
-  id: string;
-  name: string;
-  power_kwp: number;
-  price_usd: number;
-  coverage_percentage: number;
-  roi_years: number;
-}
-
-export interface MonthComparison {
-  month: string;
-  without_solar_usd: number;
-  with_solar_usd: number;
-}
-
-export interface CalculateResponse {
-  calculation_id: string;
-  recommended_kit: RecommendedKit;
   savings: {
     monthly_usd: number;
     annual_usd: number;
@@ -62,7 +48,12 @@ export interface CalculateResponse {
     co2_reduction_25_years_tons: number;
   };
   comparison_chart: MonthComparison[];
-  alternative_kits: AlternativeKit[];
+}
+
+export interface CalculateResponse {
+  calculation_id: string;
+  kits: KitOption[];
+  recommended_kit_id: string;
 }
 
 // ── DB row shapes returned by queries ────────────────────────

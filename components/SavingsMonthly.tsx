@@ -10,7 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import type { CalculateResponse } from "@/lib/solar/types";
+import type { KitOption } from "@/lib/solar/types";
 
 function fmtMoney(n: number) {
   return (
@@ -113,15 +113,13 @@ function SkeletonRow() {
 }
 
 interface SavingsMonthlyProps {
-  result?: CalculateResponse | null;
-  monthlyBill?: number;
-  kitPower?: number;
+  kit?: KitOption | null;
 }
 
 const SavingsMonthly = forwardRef<HTMLElement, SavingsMonthlyProps>(
-  function SavingsMonthly({ result }, ref) {
-    const chart = result?.comparison_chart ?? [];
-    const savings = result?.savings;
+  function SavingsMonthly({ kit }, ref) {
+    const chart = kit?.comparison_chart ?? [];
+    const savings = kit?.savings;
 
     const totalSinSolar = chart.reduce((s, m) => s + m.without_solar_usd, 0);
     const totalConSolar = chart.reduce((s, m) => s + m.with_solar_usd, 0);

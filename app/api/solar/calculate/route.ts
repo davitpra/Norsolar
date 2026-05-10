@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { randomUUID } from 'crypto';
 import { getCityWithIrradiance, getActiveTariff, getKitsByTarget, getSystemConfig, insertCalculation, insertCalculationBreakdown } from '@/lib/solar/db';
 import { selectKit, computeKitMetrics } from '@/lib/solar/calculator';
-import type { CalculateResponse, CustomerType } from '@/lib/solar/types';
+import type { CalculateResponse, CustomerType, KitOption } from '@/lib/solar/types';
 
 const BodySchema = z.object({
   city: z.string().min(1),
@@ -97,63 +97,63 @@ export async function POST(req: NextRequest) {
       ),
     );
 
-    // Build alternative metrics
-    const altKits = alternatives.map((alt) => {
-      const altM = computeKitMetrics(
-        monthly_consumption_kwh,
-        alt,
-        cityData.hsp_annual,
-        cityData.monthly_factors,
-        cityData.region,
-        customerType,
-        tariffRanges,
-        flatRate,
-        cfg,
-      );
+    function buildKitOption(kit: typeof recommended, m: typeof metrics): KitOption {
       return {
-        id: alt.id,
-        name: alt.name,
-        power_kwp: alt.power_kwp,
-        price_usd: alt.price_usd,
-        coverage_percentage: altM.coveragePercent,
-        roi_years: altM.roiYears,
+        id: kit.id,
+        name: kit.name,
+        power_kwp: kit.power_kwp,
+        num_panels: kit.panel_quantity,
+        panel_watts: kit.panel_watts,
+        panel_brand: kit.panel_brand,
+        inverter_brand: kit.inverter_brand,
+        inverter_type: kit.inverter_type,
+        includes_battery: kit.battery_kwh != null,
+        battery_kwh: kit.battery_kwh,
+        price_usd: kit.price_usd,
+        roof_area_m2: kit.roof_area_required_m2,
+        image_url: kit.image_url,
+        savings: {
+          monthly_usd: m.monthlySavingsUsd,
+          annual_usd: m.annualSavingsUsd,
+          total_25_years_usd: m.total25YearsUsd,
+          roi_years: m.roiYears,
+          coverage_percentage: m.coveragePercent,
+        },
+        generation: {
+          monthly_kwh: m.monthlyGenerationKwh,
+          annual_kwh: m.annualGenerationKwh,
+        },
+        environmental: {
+          co2_reduction_annual_tons: m.co2AnnualTons,
+          co2_reduction_25_years_tons: m.co2TwentyFiveTons,
+        },
+        comparison_chart: m.comparisonChart,
       };
-    });
+    }
+
+    const otherKits = kits.filter((k) => k.id !== recommended.id);
+    const allKits: KitOption[] = [
+      buildKitOption(recommended, metrics),
+      ...otherKits.map((alt) => {
+        const altM = computeKitMetrics(
+          monthly_consumption_kwh,
+          alt,
+          cityData.hsp_annual,
+          cityData.monthly_factors,
+          cityData.region,
+          customerType,
+          tariffRanges,
+          flatRate,
+          cfg,
+        );
+        return buildKitOption(alt, altM);
+      }),
+    ].sort((a, b) => a.power_kwp - b.power_kwp);
 
     const response: CalculateResponse = {
       calculation_id: calculationId,
-      recommended_kit: {
-        id: recommended.id,
-        name: recommended.name,
-        power_kwp: recommended.power_kwp,
-        num_panels: recommended.panel_quantity,
-        panel_watts: recommended.panel_watts,
-        panel_brand: recommended.panel_brand,
-        inverter_brand: recommended.inverter_brand,
-        inverter_type: recommended.inverter_type,
-        includes_battery: recommended.battery_kwh != null,
-        battery_kwh: recommended.battery_kwh,
-        price_usd: recommended.price_usd,
-        roof_area_m2: recommended.roof_area_required_m2,
-        image_url: recommended.image_url,
-      },
-      savings: {
-        monthly_usd: metrics.monthlySavingsUsd,
-        annual_usd: metrics.annualSavingsUsd,
-        total_25_years_usd: metrics.total25YearsUsd,
-        roi_years: metrics.roiYears,
-        coverage_percentage: metrics.coveragePercent,
-      },
-      generation: {
-        monthly_kwh: metrics.monthlyGenerationKwh,
-        annual_kwh: metrics.annualGenerationKwh,
-      },
-      environmental: {
-        co2_reduction_annual_tons: metrics.co2AnnualTons,
-        co2_reduction_25_years_tons: metrics.co2TwentyFiveTons,
-      },
-      comparison_chart: metrics.comparisonChart,
-      alternative_kits: altKits,
+      kits: allKits,
+      recommended_kit_id: recommended.id,
     };
 
     return NextResponse.json(response);

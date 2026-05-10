@@ -17,10 +17,19 @@ import NSKitRecommendation from "@/components/NSKitRecommendation";
 import NSSavingsResults from "@/components/NSSavingsResults";
 import SavingsMonthly from "@/components/SavingsMonthly";
 import NSKitsCarousel from "@/components/KitsCarousel";
-import type { CalculateResponse } from "@/lib/solar/types";
+import type { CalculateResponse, KitOption } from "@/lib/solar/types";
 
 export default function Page() {
   const [calc, setCalc] = useState<CalculateResponse | null>(null);
+  const [selectedKitId, setSelectedKitId] = useState<string | null>(null);
+
+  const handleCalculate = (data: CalculateResponse) => {
+    setCalc(data);
+    setSelectedKitId(data.recommended_kit_id);
+  };
+
+  const activeKit: KitOption | null =
+    calc?.kits.find((k) => k.id === selectedKitId) ?? calc?.kits[0] ?? null;
 
   useEffect(() => {
     const els = document.querySelectorAll(
@@ -49,11 +58,21 @@ export default function Page() {
         <NSHero />
         <NSBand />
         <NSProblema />
-        <NSInput onCalculate={setCalc} />
-        <NSKitRecommendation recommendation={calc?.recommended_kit} />
-        <NSSavingsResults result={calc} />
-        <SavingsMonthly result={calc} />
-        <NSKitsCarousel result={calc} />
+        <NSInput onCalculate={handleCalculate} />
+        <NSKitRecommendation
+          kit={activeKit}
+          kits={calc?.kits ?? []}
+          recommendedKitId={calc?.recommended_kit_id ?? null}
+          onSelectKit={setSelectedKitId}
+        />
+        <NSSavingsResults kit={activeKit} />
+        <SavingsMonthly kit={activeKit} />
+        <NSKitsCarousel
+          kits={calc?.kits ?? []}
+          recommendedKitId={calc?.recommended_kit_id ?? null}
+          selectedKitId={selectedKitId}
+          onSelectKit={setSelectedKitId}
+        />
         <NSBrandBar />
         <NSTestimonials />
         <NSWhy />

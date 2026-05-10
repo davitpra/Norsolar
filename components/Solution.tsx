@@ -211,13 +211,7 @@ export default function NSSolution() {
         </div>
       </section>
 
-      <SavingsResults
-        ref={resultsRef}
-        monthlyBill={
-          resultado ? parseFloat(consumo) * parseFloat(tarifa) : undefined
-        }
-        kitPower={resultado?.kit?.potencia}
-      />
+      <SavingsResults ref={resultsRef} />
     </>
   );
 }
