@@ -13,6 +13,7 @@ import NSProblema from "@/components/Problema";
 import NSFooter from "@/components/Footer";
 import NSWhatsAppFab from "@/components/WhatsAppFab";
 import NSSolution from "@/components/Solution";
+import NSInput from "@/components/NSInput";
 
 export default function Page() {
   const [monthlyBill, setMonthlyBill] = useState(80);
@@ -46,6 +47,7 @@ export default function Page() {
         <NSHero />
         <NSBand />
         <NSProblema />
+        <NSInput/>
         <NSSolution/>
         <NSBrandBar />
         <NSTestimonials />
