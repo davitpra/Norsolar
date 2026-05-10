@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from 'react';
 
-export default function NSHeader({ active = 'INICIO' }) {
+interface HeaderProps {
+  active?: string;
+}
+
+export default function NSHeader({ active = 'INICIO' }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {

@@ -13,9 +13,9 @@ export default function NSHero() {
     const target = 325;
     const dur = 1400;
     const start = performance.now();
-    let raf;
+    let raf: number;
     setCount(0);
-    const tick = (t) => {
+    const tick = (t: number) => {
       const p = Math.min(1, (t - start) / dur);
       const eased = 1 - Math.pow(1 - p, 3);
       setCount(Math.round(target * eased));
@@ -24,6 +24,8 @@ export default function NSHero() {
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, []);
+
+  void count;
 
   return (
     <section

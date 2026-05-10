@@ -1,4 +1,12 @@
-const socials = [
+import React from 'react';
+
+interface Social {
+  label: string;
+  href: string;
+  svg: React.ReactNode;
+}
+
+const socials: Social[] = [
   {
     label: 'Facebook',
     href: '#',
@@ -44,15 +52,12 @@ export default function NSFooter() {
     <footer className="bg-ns-navy-deep text-white" id="contacto" data-screen-label="Footer">
       <div className="ns-container flex items-center justify-between py-5 gap-4 flex-wrap">
 
-        {/* Logo */}
         <img src="/assets/logo-dark-bg.png" alt="Norsolar" className="h-8" />
 
-        {/* Copyright */}
         <span className="font-body text-[12px] text-white/55 text-center">
           © 2025 Norsolar Ecuador. Todos los derechos reservados.
         </span>
 
-        {/* Social icons */}
         <div className="flex gap-4">
           {socials.map(({ label, href, svg }) => (
             <a

@@ -1,6 +1,13 @@
 import Image from 'next/image';
 
-const problemas = [
+interface Problema {
+  img: string;
+  alt: string;
+  titulo: string;
+  descripcion: string;
+}
+
+const problemas: Problema[] = [
   {
     img: '/assets/problema/factura.png',
     alt: 'Planilla eléctrica CNEL con valor alto',
@@ -28,7 +35,6 @@ export default function NSProblema() {
   return (
     <section className="ns-section bg-ns-bg-alt">
       <div className="ns-container">
-        {/* Header */}
         <div className="mb-12">
           <span className="ns-eyebrow">EL PROBLEMA</span>
           <h2 className="ns-display-h-md mt-4">
@@ -36,14 +42,12 @@ export default function NSProblema() {
           </h2>
         </div>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 gap-8 tablet:grid-cols-3">
           {problemas.map(({ img, alt, titulo, descripcion }) => (
             <div
               key={titulo}
               className="overflow-hidden rounded-2xl bg-white shadow-sm border border-ns-border"
             >
-              {/* Image */}
               <div className="relative aspect-4/3 w-full overflow-hidden">
                 <Image
                   src={img}
@@ -53,7 +57,6 @@ export default function NSProblema() {
                   sizes="(max-width: 960px) 100vw, 33vw"
                 />
               </div>
-              {/* Body */}
               <div className="p-6">
                 <h3 className="font-display font-semibold text-ns-navy text-[18px] leading-snug mb-2">
                   {titulo}

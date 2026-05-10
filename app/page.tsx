@@ -10,7 +10,6 @@ import NSProjects from "@/components/Projects";
 import NSQuoteForm from "@/components/QuoteForm";
 import NSTestimonials from "@/components/Testimonials";
 import NSProblema from "@/components/Problema";
-import NSSavingsResults from "@/components/SavingsResults";
 import NSFooter from "@/components/Footer";
 import NSWhatsAppFab from "@/components/WhatsAppFab";
 import NSSolution from "@/components/Solution";
@@ -37,6 +36,8 @@ export default function Page() {
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
+
+  void monthlyBill;
 
   return (
     <>

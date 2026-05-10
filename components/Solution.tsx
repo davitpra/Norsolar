@@ -5,19 +5,22 @@ import Image from 'next/image';
 import NSKitsCarousel from './KitsCarousel';
 import SavingsResults from './SavingsResults';
 import { recommendKit, computeSavingsProjection } from '@/lib/kits';
+import type { Kit, SavingsProjection } from '@/lib/kits';
 
 const ciudades = [
   'Ibarra', 'Quito', 'Guayaquil', 'Cuenca', 'Ambato',
   'Riobamba', 'Loja', 'Esmeraldas', 'Manta', 'Santo Domingo',
 ];
 
+type Resultado = SavingsProjection & { kit: Kit };
+
 export default function NSSolution() {
   const [tipo, setTipo] = useState('residencial');
   const [consumo, setConsumo] = useState('');
   const [ciudad, setCiudad] = useState('');
   const [tarifa, setTarifa] = useState('');
-  const [resultado, setResultado] = useState(null);
-  const resultsRef = useRef(null);
+  const [resultado, setResultado] = useState<Resultado | null>(null);
+  const resultsRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (resultado) {
@@ -39,7 +42,6 @@ export default function NSSolution() {
       <section className="ns-section bg-white">
         <div className="ns-container">
 
-          {/* Header */}
           <div className="mb-12">
             <span className="ns-eyebrow">LA SOLUCIÓN</span>
             <h2 className="ns-display-h-md mt-4">
@@ -47,13 +49,10 @@ export default function NSSolution() {
             </h2>
           </div>
 
-          {/* 3-column grid */}
           <div className="grid grid-cols-1 gap-6 tablet:grid-cols-3">
 
-            {/* Card 1 — Kits Solares */}
             <NSKitsCarousel />
 
-            {/* Card 2 — ¿Cómo funciona? */}
             <div className="rounded-2xl border border-ns-border bg-white p-8 shadow-sm flex flex-col gap-4">
               <p className="font-display font-semibold text-ns-navy text-center text-[15px] tracking-wide uppercase">
                 ¿Cómo funciona?
@@ -69,7 +68,6 @@ export default function NSSolution() {
               </div>
             </div>
 
-            {/* Card 3 — Calculadora */}
             <div className="rounded-2xl bg-ns-navy-deep p-8 shadow-sm flex flex-col gap-5">
               <div className="text-center">
                 <p className="font-display font-extrabold text-white text-[20px] leading-snug">
@@ -80,7 +78,6 @@ export default function NSSolution() {
                 </p>
               </div>
 
-              {/* Tipo de cliente */}
               <div className="flex flex-col gap-1.5">
                 <label className="font-body text-white/70 text-[13px]">
                   Tipo de cliente
@@ -106,7 +103,6 @@ export default function NSSolution() {
                 </div>
               </div>
 
-              {/* Consumo */}
               <div className="flex flex-col gap-1.5">
                 <label className="font-body text-white/70 text-[13px]">
                   Consumo mensual (KWh)
@@ -121,7 +117,6 @@ export default function NSSolution() {
                 />
               </div>
 
-              {/* Tarifa eléctrica */}
               <div className="flex flex-col gap-1.5">
                 <label className="font-body text-white/70 text-[13px]">
                   Tarifa eléctrica (USD/kWh)
@@ -137,7 +132,6 @@ export default function NSSolution() {
                 />
               </div>
 
-              {/* Ciudad */}
               <div className="flex flex-col gap-1.5">
                 <label className="font-body text-white/70 text-[13px]">
                   Ciudad
@@ -154,7 +148,6 @@ export default function NSSolution() {
                 </select>
               </div>
 
-              {/* Resultado mensual rápido */}
               {resultado && (
                 <div className="text-center py-2">
                   <p className="font-body text-white/70 text-[13px]">
@@ -169,7 +162,6 @@ export default function NSSolution() {
                 </div>
               )}
 
-              {/* CTA */}
               <button
                 onClick={handleCalcular}
                 disabled={!consumo || parseFloat(consumo) <= 0 || !tarifa || parseFloat(tarifa) <= 0}

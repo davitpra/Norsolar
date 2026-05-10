@@ -8,7 +8,7 @@ import { KITS } from '@/lib/kits';
 export default function NSKitsCarousel() {
   const [active, setActive] = useState(0);
 
-  const goTo = useCallback((i) => setActive(i), []);
+  const goTo = useCallback((i: number) => setActive(i), []);
 
   useEffect(() => {
     const id = setInterval(() => setActive((i) => (i + 1) % KITS.length), 5000);
@@ -20,7 +20,6 @@ export default function NSKitsCarousel() {
   return (
     <div className="rounded-2xl border border-ns-border bg-white p-8 shadow-sm flex flex-col gap-5">
 
-      {/* Header */}
       <div>
         <p className="font-body text-[11px] tracking-widest text-ns-muted uppercase mb-1">
           KIT {active + 1} DE {KITS.length}
@@ -30,7 +29,6 @@ export default function NSKitsCarousel() {
         </p>
       </div>
 
-      {/* Imagen */}
       <div className="relative w-full aspect-4/3 overflow-hidden rounded-xl">
         {kit.id === 'hibrido' && (
           <span className="absolute top-3 right-3 z-10 bg-ns-orange text-white font-display font-semibold text-[11px] tracking-wide uppercase px-2.5 py-1 rounded-full">
@@ -46,7 +44,6 @@ export default function NSKitsCarousel() {
         />
       </div>
 
-      {/* Potencia + Precio */}
       <div className="flex items-center justify-between border border-ns-border rounded-xl px-4 py-3">
         <div>
           <p className="font-body text-[11px] text-ns-muted uppercase tracking-wide">Potencia</p>
@@ -60,7 +57,6 @@ export default function NSKitsCarousel() {
         </div>
       </div>
 
-      {/* Componentes */}
       <ul className="flex flex-col gap-3">
         {[kit.paneles, kit.inversor, kit.bateria].filter(Boolean).map((item) => (
           <li key={item} className="flex items-center gap-3">
@@ -70,7 +66,6 @@ export default function NSKitsCarousel() {
         ))}
       </ul>
 
-      {/* Producción + Ahorro */}
       <div className="grid grid-cols-2 gap-3 mt-auto">
         <div className="bg-[#F7F8FA] rounded-xl p-3 text-center">
           <p className="font-body text-[11px] text-ns-muted uppercase tracking-wide">Producción</p>
@@ -84,7 +79,6 @@ export default function NSKitsCarousel() {
         </div>
       </div>
 
-      {/* Dots */}
       <div className="flex gap-2 justify-center">
         {KITS.map((_, i) => (
           <button

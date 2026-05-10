@@ -1,5 +1,10 @@
+interface Brand {
+  name: string;
+  cls: string;
+}
+
 export default function NSBrandBar() {
-  const brands = [
+  const brands: Brand[] = [
     { name: 'Trinasolar', cls: 'lowercase' },
     { name: 'ECOFLOW',    cls: 'tracking-[0.18em] uppercase text-[18px]' },
     { name: 'K2 Systems', cls: 'lowercase italic' },

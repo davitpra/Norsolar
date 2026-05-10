@@ -1,11 +1,12 @@
 import './globals.css';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Norsolar — Energía Solar en Ecuador',
   description: 'Expertos en soluciones fotovoltaicas para hogares, comercios e industrias en Ecuador. Ahorre hasta un 90% en su planilla eléctrica.',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
       <head>

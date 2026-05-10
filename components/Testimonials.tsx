@@ -2,7 +2,13 @@
 
 import { useState, useEffect } from 'react';
 
-const testimonials = [
+interface Testimonial {
+  name: string;
+  role: string;
+  text: string;
+}
+
+const testimonials: Testimonial[] = [
   { name: 'María Fernanda R.', role: 'Hogar — Ibarra',     text: 'Gracias a Norsolar redujimos nuestra planilla casi a cero. Excelente asesoría y cumplieron todo lo prometido.' },
   { name: 'Carlos Andrade',    role: 'Gerente — Comercio', text: 'La instalación fue rápida y profesional. Ahora nuestra empresa tiene ahorros significativos cada mes.' },
   { name: 'Ing. Laura Pérez',  role: 'Industria — Quito',  text: 'Norsolar nos brindó una solución a la medida y monitoreo 24/7. Totalmente recomendados.' },
@@ -26,13 +32,11 @@ export default function NSTestimonials() {
     <section className="ns-section bg-white" data-screen-label="Testimonios">
       <div className="ns-container grid grid-cols-[1fr_2fr] max-tablet:grid-cols-1 gap-10 items-start">
 
-        {/* Left: stats */}
         <div>
           <span className="ns-eyebrow">TESTIMONIOS</span>
           <h2 className="ns-display-h-md">TU MEJOR<br />OPCIÓN EN<br />ENERGÍA SOLAR</h2>
         </div>
 
-        {/* Right: cards + dots */}
         <div className="flex flex-col gap-[18px]">
           <div className="grid grid-cols-3 max-tablet:grid-cols-2 max-[600px]:grid-cols-1 gap-[18px]">
             {visible.map(item => (

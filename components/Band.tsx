@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   BoltIcon,
   SparklesIcon,
@@ -5,7 +6,13 @@ import {
   ShieldCheckIcon,
 } from '@heroicons/react/24/solid';
 
-const items = [
+interface BandItem {
+  icon: React.ReactNode;
+  title: string;
+  sub: string;
+}
+
+const items: BandItem[] = [
   {
     icon: <BoltIcon className="w-7 h-7 text-white" />,
     title: 'Ahorra hasta 90%',

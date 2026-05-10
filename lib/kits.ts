@@ -1,11 +1,31 @@
-export const TARIFAS = {
+export type TipoCliente = 'residencial' | 'comercial' | 'industrial';
+
+interface TarifaRange {
+  min: number;
+  max: number;
+}
+
+export const TARIFAS: Record<TipoCliente, TarifaRange> = {
   residencial: { min: 0.09, max: 0.11 },
   comercial:   { min: 0.10, max: 0.13 },
   industrial:  { min: 0.08, max: 0.12 },
 };
 
-// Kits estándar (excluye híbrido para recomendación automática)
-export const KITS = [
+export interface Kit {
+  id: string;
+  nombre: string;
+  consumo: number;
+  potencia: number;
+  precio: number;
+  paneles: string;
+  inversor: string;
+  bateria: string | null;
+  produccion: number;
+  ahorroMin: number;
+  ahorroMax: number;
+}
+
+export const KITS: Kit[] = [
   {
     id: 'k150',
     nombre: 'Kit 150 kWh/mes',
@@ -88,22 +108,43 @@ export const KITS = [
 
 const STANDARD_KITS = KITS.filter((k) => k.id !== 'hibrido');
 
-export function recommendKit(consumoUsuario) {
+export function recommendKit(consumoUsuario: number): Kit {
   const match = STANDARD_KITS.find((k) => k.consumo >= consumoUsuario);
   return match ?? STANDARD_KITS[STANDARD_KITS.length - 1];
 }
 
-export function computeSavingsProjection({ consumo, tipo, kit, tariff }) {
-  const tarifa = TARIFAS[tipo] ?? TARIFAS.residencial;
+interface YearData {
+  year: number;
+  ahorroAnual: number;
+  acumulado: number;
+}
+
+export interface SavingsProjection {
+  monthlySavings: number;
+  monthlyRange: { min: number; max: number };
+  yearlyData: YearData[];
+  roiYears: number | null;
+  totalSavings25y: number;
+}
+
+interface ComputeSavingsParams {
+  consumo: number;
+  tipo: string;
+  kit: Kit;
+  tariff?: number;
+}
+
+export function computeSavingsProjection({ consumo, tipo, kit, tariff }: ComputeSavingsParams): SavingsProjection {
+  const tarifa = TARIFAS[tipo as TipoCliente] ?? TARIFAS.residencial;
   const tarifaPromedio = tariff != null ? tariff : (tarifa.min + tarifa.max) / 2;
   const tariffMin = tariff != null ? tariff : tarifa.min;
   const tariffMax = tariff != null ? tariff : tarifa.max;
   const produccionEfectiva = Math.min(kit.produccion, consumo);
   const monthlySavings = produccionEfectiva * tarifaPromedio;
 
-  const yearlyData = [];
+  const yearlyData: YearData[] = [];
   let acumulado = 0;
-  let roiYears = null;
+  let roiYears: number | null = null;
 
   for (let y = 1; y <= 25; y++) {
     const inflacion = Math.pow(1.03, y - 1);
@@ -113,7 +154,6 @@ export function computeSavingsProjection({ consumo, tipo, kit, tariff }) {
     acumulado += ahorroAnual;
 
     if (roiYears === null && acumulado >= kit.precio) {
-      // interpolate to find exact fractional year
       const fraccion = (kit.precio - prevAcumulado) / (acumulado - prevAcumulado);
       roiYears = parseFloat((y - 1 + fraccion).toFixed(1));
     }

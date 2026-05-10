@@ -2,29 +2,50 @@
 
 import { useState } from 'react';
 import { BoltIcon, SunIcon, ShieldCheckIcon } from '@heroicons/react/24/solid';
+import type { ComponentType, SVGProps } from 'react';
 
-const BADGES = [
+interface Badge {
+  Icon: ComponentType<SVGProps<SVGSVGElement> & { className?: string }>;
+  label: string;
+}
+
+const BADGES: Badge[] = [
   { Icon: BoltIcon,        label: 'Ahorra ahora' },
   { Icon: SunIcon,         label: 'Energía limpia' },
   { Icon: ShieldCheckIcon, label: 'Protección solar' },
 ];
 
-export default function NSQuoteForm({ id, onCalculate }) {
+interface FormState {
+  nombre: string;
+  telefono: string;
+  correo: string;
+  ciudad: string;
+  tipo: string;
+  factura: string;
+}
+
+interface QuoteFormProps {
+  id?: string;
+  onCalculate?: (value: number) => void;
+}
+
+export default function NSQuoteForm({ id, onCalculate }: QuoteFormProps) {
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormState>({
     nombre: '', telefono: '', correo: '', ciudad: '', tipo: '', factura: '',
   });
 
-  const upd = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  const upd = (k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    setForm({ ...form, [k]: e.target.value });
 
-  const updFactura = (e) => {
+  const updFactura = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;
     setForm((f) => ({ ...f, factura: v }));
     const parsed = Number(v);
     if (!Number.isNaN(parsed) && parsed > 0) onCalculate?.(parsed);
   };
 
-  const submit = (e) => { e.preventDefault(); setSubmitted(true); };
+  const submit = (e: React.FormEvent) => { e.preventDefault(); setSubmitted(true); };
 
   return (
     <section
@@ -33,7 +54,6 @@ export default function NSQuoteForm({ id, onCalculate }) {
       className="relative overflow-hidden"
       style={{ minHeight: 520 }}
     >
-      {/* Background image + overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/assets/hero-paneles.jpg')" }}
@@ -46,11 +66,9 @@ export default function NSQuoteForm({ id, onCalculate }) {
         }}
       />
 
-      {/* Content */}
       <div className="relative ns-container py-20 max-tablet:py-14">
         <div className="grid grid-cols-[1fr_420px] max-tablet:grid-cols-1 gap-14 items-center">
 
-          {/* Left: copy */}
           <div>
             <span className="ns-eyebrow">NO TE QUEDES SIN ENERGÍA</span>
             <h2
@@ -63,7 +81,6 @@ export default function NSQuoteForm({ id, onCalculate }) {
               Da el primer paso hacia la independencia energética. Calcula tu ahorro y recibe tu propuesta personalizada.
             </p>
 
-            {/* Badges */}
             <div className="flex flex-wrap gap-3">
               {BADGES.map(({ Icon, label }) => (
                 <span
@@ -77,7 +94,6 @@ export default function NSQuoteForm({ id, onCalculate }) {
             </div>
           </div>
 
-          {/* Right: white form card */}
           <div className="bg-white rounded-2xl shadow-2xl p-7 max-tablet:p-5">
             {submitted ? (
               <div className="text-center py-8">

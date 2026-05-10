@@ -1,6 +1,7 @@
 'use client';
 
 import { forwardRef, useMemo } from 'react';
+import type { ComponentType, SVGProps } from 'react';
 import {
   BanknotesIcon,
   CloudIcon,
@@ -16,15 +17,26 @@ const YEARS = 25;
 const KWH_PER_KWP_YEAR = 1500;
 const CO2_KG_PER_KWH = 0.475;
 
-// Cosmetic monthly variation so bars aren't identical (not real seasonal data)
 const SEASON = [1.05, 0.95, 1.0, 0.98, 1.02, 1.08, 1.1, 1.05, 0.95, 0.92, 0.97, 1.03];
 const MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
-function fmtMoney(n) {
+function fmtMoney(n: number) {
   return '$' + Math.round(n).toLocaleString('en-US');
 }
 
-function CustomTooltip({ active, payload, label }) {
+interface PayloadEntry {
+  dataKey: string;
+  value: number;
+  color: string;
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: PayloadEntry[];
+  label?: string;
+}
+
+function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload?.length) return null;
   return (
     <div className="rounded-xl bg-ns-navy-deep border border-white/10 px-4 py-3 shadow-lg">
@@ -44,7 +56,14 @@ function CustomTooltip({ active, payload, label }) {
   );
 }
 
-function MetricCard({ Icon, label, value, accent }) {
+interface MetricCardProps {
+  Icon: ComponentType<SVGProps<SVGSVGElement> & { className?: string; strokeWidth?: number }>;
+  label: string;
+  value: string;
+  accent: 'success' | 'orange';
+}
+
+function MetricCard({ Icon, label, value, accent }: MetricCardProps) {
   const accentBg = accent === 'success' ? 'bg-ns-success/10' : 'bg-ns-orange/10';
   const accentFg = accent === 'success' ? 'text-ns-success' : 'text-ns-orange';
   return (
@@ -62,7 +81,12 @@ function MetricCard({ Icon, label, value, accent }) {
   );
 }
 
-const SavingsResults = forwardRef(function SavingsResults(
+interface SavingsResultsProps {
+  monthlyBill?: number;
+  kitPower?: number;
+}
+
+const SavingsResults = forwardRef<HTMLElement, SavingsResultsProps>(function SavingsResults(
   { monthlyBill = 80, kitPower = 6 },
   ref,
 ) {
@@ -77,7 +101,7 @@ const SavingsResults = forwardRef(function SavingsResults(
     }));
 
     const totalSavings25y = Math.round(
-      Array.from({ length: YEARS }).reduce(
+      Array.from({ length: YEARS }).reduce<number>(
         (acc, _, y) => acc + bill * 12 * OFFSET_PCT * Math.pow(1 + YEARLY_INFLATION, y),
         0,
       ),
@@ -100,15 +124,12 @@ const SavingsResults = forwardRef(function SavingsResults(
       className="bg-ns-bg-alt border-t border-ns-border ns-section"
     >
       <div className="ns-container py-14 flex flex-col gap-10">
-        {/* Header */}
         <div className="text-center">
           <span className="ns-eyebrow">TU AHORRO</span>
           <h2 className="ns-display-h-md mt-3">Compara tu gasto actual vs. energía solar</h2>
         </div>
 
-        {/* Two-column grid: chart + metrics */}
         <div className="grid grid-cols-12 gap-6 max-tablet:grid-cols-1">
-          {/* Bar chart card */}
           <div className="col-span-7 max-tablet:col-span-1 rounded-2xl border border-ns-border bg-white p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4 max-tablet:flex-col max-tablet:items-start max-tablet:gap-3">
               <p className="font-display font-semibold text-ns-navy text-[15px]">Gasto mensual</p>
@@ -134,7 +155,7 @@ const SavingsResults = forwardRef(function SavingsResults(
                   tick={{ fontFamily: 'Inter', fontSize: 11, fill: '#9ca3af' }}
                 />
                 <YAxis
-                  tickFormatter={(v) => '$' + v}
+                  tickFormatter={(v: number) => '$' + v}
                   tickLine={false}
                   axisLine={false}
                   tick={{ fontFamily: 'Inter', fontSize: 11, fill: '#9ca3af' }}
@@ -147,7 +168,6 @@ const SavingsResults = forwardRef(function SavingsResults(
             </ResponsiveContainer>
           </div>
 
-          {/* Metrics column */}
           <div className="col-span-5 max-tablet:col-span-1 flex flex-col gap-4">
             <MetricCard
               Icon={BanknotesIcon}
