@@ -14,9 +14,12 @@ import NSFooter from "@/components/Footer";
 import NSWhatsAppFab from "@/components/WhatsAppFab";
 import NSSolution from "@/components/Solution";
 import NSInput from "@/components/NSInput";
+import NSKitRecommendation from "@/components/NSKitRecommendation";
 
 export default function Page() {
   const [monthlyBill, setMonthlyBill] = useState(80);
+  const [consumo, setConsumo] = useState(345);
+  const [tipo, setTipo] = useState("residencial");
 
   useEffect(() => {
     const els = document.querySelectorAll(
@@ -40,6 +43,11 @@ export default function Page() {
 
   void monthlyBill;
 
+  const handleInputCalculate = (c: number, _tarifa: number, t: string) => {
+    setConsumo(c);
+    setTipo(t.toLowerCase());
+  };
+
   return (
     <>
       <NSHeader active="INICIO" />
@@ -47,7 +55,8 @@ export default function Page() {
         <NSHero />
         <NSBand />
         <NSProblema />
-        <NSInput/>
+        <NSInput onCalculate={handleInputCalculate} />
+        <NSKitRecommendation consumo={consumo} tipo={tipo} />
         <NSSolution/>
         <NSBrandBar />
         <NSTestimonials />
