@@ -28,7 +28,7 @@ export default function NSSolution() {
   const [ciudad, setCiudad] = useState("");
   const [tarifa, setTarifa] = useState("");
   const [resultado, setResultado] = useState<Resultado | null>(null);
-  const resultsRef = useRef<HTMLElement>(null);
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (resultado) {
