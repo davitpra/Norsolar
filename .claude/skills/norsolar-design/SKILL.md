@@ -14,14 +14,13 @@ If the user invokes this skill without guidance, ask what they want to build and
 
 ## Quick map
 
-| File / Dir               | Purpose                                                                                                                 |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| `references/tailwind.md` | **Start here for code.** Full Tailwind v4 setup, `@theme` config, brand→class mapping, and JSX patterns.                |
-| `README.md`              | Full brand guide: voice/copy, visual foundations, iconography, editorial rules.                                         |
-| `fonts/`                 | Montserrat ExtraBold/SemiBold + Inter Regular (TTF). Serve from `/fonts/` or embed via `@font-face`.                    |
-| `assets/`                | Logos (color/navy/white/dark-bg), favicon, brand board, photography.                                                    |
-| `ui_kits/website/`       | Reference JSX components for the full Norsolar site (header, hero, why, process, projects, form, testimonials, footer). |
-| `preview/`               | Design tokens & components rendered as small HTML cards.                                                                |
+| File / Dir               | Purpose                                                                                                  |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `references/tailwind.md` | **Start here for code.** Full Tailwind v4 setup, `@theme` config, brand→class mapping, and JSX patterns. |
+| `README.md`              | Full brand guide: voice/copy, visual foundations, iconography, editorial rules.                          |
+| `fonts/`                 | Montserrat ExtraBold/SemiBold + Inter Regular (TTF). Serve from `/fonts/` or embed via `@font-face`.     |
+| `assets/`                | Logos (color/navy/white/dark-bg), favicon, brand board, photography.                                     |
+| `preview/`               | Design tokens & components rendered as small HTML cards.                                                 |
 
 ---
 
@@ -47,7 +46,7 @@ If the user invokes this skill without guidance, ask what they want to build and
 
 **Layout:**
 
-- Sections: `ns-section` = `py-[40px]`. Dark rounded: `bg-ns-navy-deep rounded-3xl mx-8 py-20 px-16`.
+- Sections: `ns-section` = `py-[100px]`. Dark rounded: `bg-ns-navy-deep rounded-3xl mx-8 py-20 px-16`.
 - Container: `ns-container` = `max-w-[1240px] mx-auto px-8`.
 - Responsive tablet breakpoint (960px): `max-tablet:grid-cols-1`, `tablet:flex`, etc.
 
