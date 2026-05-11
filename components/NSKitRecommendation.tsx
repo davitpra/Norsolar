@@ -132,21 +132,16 @@ export default function NSKitRecommendation({
       ) : (
         <div className="rounded-2xl border border-ns-border bg-white shadow-sm overflow-hidden grid grid-cols-[420px_1fr] max-tablet:grid-cols-1">
           {/* Left: image */}
-          <div className="relative min-h-80">
-            <Image
-              src={currentKit.image_url ?? "/assets/instalacion-panel-1.jpg"}
-              alt={currentKit.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 800px) 100vw, 420px"
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(15,26,46,0.35) 0%, rgba(15,26,46,0.0) 40%)",
-              }}
-            />
+          <div className="relative min-h-80 bg-white flex items-center justify-center p-8 max-tablet:min-h-64">
+            <div className="relative w-full h-full min-h-64">
+              <Image
+                src={currentKit.image_url ?? "/assets/instalacion-panel-1.jpg"}
+                alt={currentKit.name}
+                fill
+                className="object-contain"
+                sizes="(max-width: 800px) 100vw, 420px"
+              />
+            </div>
             {isRecommended && (
               <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 bg-ns-orange text-white font-display font-semibold text-[11px] tracking-[0.12em] uppercase px-3 py-1.5 rounded-full shadow-md">
                 ★ Más elegido
@@ -160,7 +155,7 @@ export default function NSKitRecommendation({
           </div>
 
           {/* Right: details */}
-          <div className="grid grid-cols-2 max-tablet:grid-cols-1 gap-0">
+          <div className="grid grid-cols-[420px_1fr] max-tablet:grid-cols-1 gap-0">
             {/* Features column */}
             <div className="p-8 max-tablet:p-6 flex flex-col justify-center">
               <span className="font-display font-semibold text-[11px] tracking-[0.18em] uppercase text-ns-orange mb-3">
