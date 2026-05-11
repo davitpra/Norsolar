@@ -54,6 +54,9 @@ export function calcMonthlySavings(
 }
 
 // ── Selección de kit recomendado ───────────────────────────
+// Prefiere kits con cobertura entre 60% y 80% (sweet spot costo-beneficio).
+// Dentro del rango elige el de menor precio por kWp.
+// Si ninguno cae en el rango, cae al más cercano (preferentemente el de mayor cobertura).
 export function selectKit(
   consumptionKwh: number,
   hsp: number,
@@ -62,30 +65,39 @@ export function selectKit(
   kits: KitRow[],
 ): { recommended: KitRow; alternatives: KitRow[] } {
   const kwpNeeded = calcKwpNeeded(consumptionKwh, hsp, losses);
+  const customerKits = kits.filter((k) => k.target === customerType);
 
-  const viable = kits
-    .filter((k) => k.target === customerType)
-    .filter((k) => k.power_kwp >= kwpNeeded * 0.8)
-    .sort((a, b) => {
-      const ratioA = a.power_kwp / kwpNeeded;
-      const ratioB = b.power_kwp / kwpNeeded;
-      // Under-coverage penalized harder (×200) than over-sizing (×80)
-      const penA = ratioA < 1 ? (1 - ratioA) * 200 : (ratioA - 1.0) * 80;
-      const penB = ratioB < 1 ? (1 - ratioB) * 200 : (ratioB - 1.0) * 80;
-      const scoreA = penA + a.price_usd / a.power_kwp;
-      const scoreB = penB + b.price_usd / b.power_kwp;
-      return scoreA - scoreB;
-    });
-
-  if (viable.length === 0) {
-    // No kit matches → return the highest-power kit for this type
-    const fallback = [...kits]
-      .filter((k) => k.target === customerType)
-      .sort((a, b) => b.power_kwp - a.power_kwp);
-    return { recommended: fallback[0], alternatives: fallback.slice(1, 3) };
+  if (customerKits.length === 0) {
+    throw new Error(`No hay kits disponibles para el tipo: ${customerType}`);
   }
 
-  return { recommended: viable[0], alternatives: viable.slice(1, 3) };
+  const byCostBenefit = (arr: KitRow[]) =>
+    [...arr].sort((a, b) => a.price_usd / a.power_kwp - b.price_usd / b.power_kwp);
+
+  // Sweet spot: kits que cubren entre 60% y 80% del consumo
+  const inRange = customerKits.filter(
+    (k) => k.power_kwp >= kwpNeeded * 0.6 && k.power_kwp <= kwpNeeded * 0.8,
+  );
+
+  let recommended: KitRow;
+
+  if (inRange.length > 0) {
+    recommended = byCostBenefit(inRange)[0];
+  } else {
+    // Fallback: el kit más cercano al rango ideal (preferir cobertura mayor a menor)
+    const above = customerKits
+      .filter((k) => k.power_kwp > kwpNeeded * 0.8)
+      .sort((a, b) => a.power_kwp - b.power_kwp);
+    if (above.length > 0) {
+      recommended = above[0];
+    } else {
+      // Todos los kits están bajo 60% → tomar el más grande disponible
+      recommended = [...customerKits].sort((a, b) => b.power_kwp - a.power_kwp)[0];
+    }
+  }
+
+  const alternatives = customerKits.filter((k) => k.id !== recommended.id);
+  return { recommended, alternatives };
 }
 
 // ── Métricas completas para un kit dado ────────────────────
@@ -99,7 +111,7 @@ export interface KitMetrics {
   roiYears: number;
   co2AnnualTons: number;
   co2TwentyFiveTons: number;
-  comparisonChart: { month: string; without_solar_usd: number; with_solar_usd: number }[];
+  comparisonChart: { month: string; without_solar_usd: number; with_solar_usd: number; generation_kwh: number; consumption_kwh: number }[];
 }
 
 export function computeKitMetrics(
@@ -134,6 +146,8 @@ export function computeKitMetrics(
       month: MONTH_NAMES[i],
       without_solar_usd: Math.round(without * 100) / 100,
       with_solar_usd: Math.round(with_ * 100) / 100,
+      generation_kwh: Math.round(genMonth * 10) / 10,
+      consumption_kwh: Math.round(consumptionKwh * 10) / 10,
     };
   });
 

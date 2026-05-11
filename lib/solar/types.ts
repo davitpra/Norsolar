@@ -16,6 +16,8 @@ export interface MonthComparison {
   month: string;
   without_solar_usd: number;
   with_solar_usd: number;
+  generation_kwh: number;
+  consumption_kwh: number;
 }
 
 export interface KitOption {

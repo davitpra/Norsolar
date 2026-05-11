@@ -18,11 +18,15 @@ function deriveFeatures(kit: KitOption): string[] {
     kit.name.toLowerCase().includes("híbrido") ||
     kit.name.toLowerCase().includes("hibrido");
   const inverter = isHybrid ? "Inversor híbrido" : "Inversor On-Grid";
-  return [
+  const features = [
     `${kit.num_panels} paneles ${kit.panel_watts}W`,
     inverter,
     `Cobertura solar: ${Math.round(kit.savings.coverage_percentage)}%`,
   ];
+  if (kit.includes_battery && kit.battery_kwh) {
+    features.push(`Batería ${kit.battery_kwh} kWh`);
+  }
+  return features;
 }
 
 interface KitCardProps {
@@ -44,8 +48,8 @@ function KitCard({ kit, isRecommended, isActive, onSelect }: KitCardProps) {
         isActive
           ? "border-ns-navy shadow-md ring-2 ring-ns-navy/20"
           : isRecommended
-          ? "border-ns-orange shadow-md ring-1 ring-ns-orange/30"
-          : "border-ns-border shadow-sm hover:border-ns-orange/50 hover:shadow-md"
+            ? "border-ns-orange shadow-md ring-1 ring-ns-orange/30"
+            : "border-ns-border shadow-sm hover:border-ns-orange/50 hover:shadow-md"
       }`}
     >
       {/* Top: image + info side by side */}
@@ -53,7 +57,7 @@ function KitCard({ kit, isRecommended, isActive, onSelect }: KitCardProps) {
         {/* Small image */}
         <div className="relative w-27.5 shrink-0 rounded-xl overflow-hidden self-stretch min-h-25">
           <Image
-            src="/assets/instalacion-panel-1.jpg"
+            src={kit.image_url ?? "/assets/instalacion-panel-1.jpg"}
             alt={kit.name}
             fill
             className="object-cover"
@@ -167,76 +171,74 @@ export default function NSKitsCarousel({
   const isEmpty = kits.length === 0;
 
   return (
-    <section className="ns-section bg-ns-bg-alt">
-      <div className="ns-container">
-        {/* Header */}
-        <div className="flex items-end justify-between mb-10 max-tablet:flex-col max-tablet:items-start max-tablet:gap-4">
-          <div>
-            <span className="ns-eyebrow">OTRAS OPCIONES PARA USTED</span>
-            <h2 className="ns-display-h-md mt-1 mb-0">
-              Kits alternativos recomendados
-            </h2>
-          </div>
-          {/* Arrow controls */}
-          {dotCount > 1 && (
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                onClick={prev}
-                disabled={start === 0}
-                aria-label="Kit anterior"
-                className="w-10 h-10 rounded-full border border-ns-border bg-white flex items-center justify-center shadow-sm transition-opacity disabled:opacity-30 hover:border-ns-orange hover:text-ns-orange"
-              >
-                <ChevronLeftIcon className="w-5 h-5" />
-              </button>
-              <button
-                onClick={next}
-                disabled={start === maxIndex}
-                aria-label="Siguiente kit"
-                className="w-10 h-10 rounded-full border border-ns-border bg-white flex items-center justify-center shadow-sm transition-opacity disabled:opacity-30 hover:border-ns-orange hover:text-ns-orange"
-              >
-                <ChevronRightIcon className="w-5 h-5" />
-              </button>
-            </div>
-          )}
+    <div className="py-10">
+      {/* Header */}
+      <div className="flex items-end justify-between mb-10 max-tablet:flex-col max-tablet:items-start max-tablet:gap-4">
+        <div>
+          <span className="ns-eyebrow">OTRAS OPCIONES PARA USTED</span>
+          <h2 className="ns-display-h-md mt-1 mb-0">
+            Kits alternativos recomendados
+          </h2>
         </div>
-
-        {/* Cards grid */}
-        <div className="grid grid-cols-3 max-tablet:grid-cols-1 gap-5">
-          {isEmpty ? (
-            <>
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-            </>
-          ) : (
-            visible.map((kit) => (
-              <KitCard
-                key={kit.id}
-                kit={kit}
-                isRecommended={kit.id === recommendedKitId}
-                isActive={kit.id === selectedKitId}
-                onSelect={() => handleSelect(kit.id)}
-              />
-            ))
-          )}
-        </div>
-
-        {/* Dot pagination */}
+        {/* Arrow controls */}
         {dotCount > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-8">
-            {Array.from({ length: dotCount }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setStart(i)}
-                aria-label={`Página ${i + 1}`}
-                className={`h-2 rounded-full border-0 cursor-pointer p-0 transition-all duration-200 ${
-                  i === start ? "w-7 bg-ns-orange" : "w-2 bg-ns-navy/20"
-                }`}
-              />
-            ))}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={prev}
+              disabled={start === 0}
+              aria-label="Kit anterior"
+              className="w-10 h-10 rounded-full border border-ns-border bg-white flex items-center justify-center shadow-sm transition-opacity disabled:opacity-30 hover:border-ns-orange hover:text-ns-orange"
+            >
+              <ChevronLeftIcon className="w-5 h-5" />
+            </button>
+            <button
+              onClick={next}
+              disabled={start === maxIndex}
+              aria-label="Siguiente kit"
+              className="w-10 h-10 rounded-full border border-ns-border bg-white flex items-center justify-center shadow-sm transition-opacity disabled:opacity-30 hover:border-ns-orange hover:text-ns-orange"
+            >
+              <ChevronRightIcon className="w-5 h-5" />
+            </button>
           </div>
         )}
       </div>
-    </section>
+
+      {/* Cards grid */}
+      <div className="grid grid-cols-3 max-tablet:grid-cols-1 gap-5">
+        {isEmpty ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : (
+          visible.map((kit) => (
+            <KitCard
+              key={kit.id}
+              kit={kit}
+              isRecommended={kit.id === recommendedKitId}
+              isActive={kit.id === selectedKitId}
+              onSelect={() => handleSelect(kit.id)}
+            />
+          ))
+        )}
+      </div>
+
+      {/* Dot pagination */}
+      {dotCount > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-8">
+          {Array.from({ length: dotCount }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setStart(i)}
+              aria-label={`Página ${i + 1}`}
+              className={`h-2 rounded-full border-0 cursor-pointer p-0 transition-all duration-200 ${
+                i === start ? "w-7 bg-ns-orange" : "w-2 bg-ns-navy/20"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

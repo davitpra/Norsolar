@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
           id: randomUUID(),
           calculation_id: calculationId,
           month: i + 1,
-          generation_kwh: metrics.annualGenerationKwh / 12,
+          generation_kwh: m.generation_kwh,
           consumption_kwh: monthly_consumption_kwh,
           cost_without_solar_usd: m.without_solar_usd,
           cost_with_solar_usd: m.with_solar_usd,

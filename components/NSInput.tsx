@@ -20,7 +20,7 @@ interface TariffResponse {
   distributor: string;
   voltage_level: string;
   suggested_rate: number;
-  rate_basis: 'escalonada_avg' | 'flat';
+  rate_basis: "escalonada_avg" | "flat";
 }
 
 interface NSInputProps {
@@ -29,7 +29,11 @@ interface NSInputProps {
   onTipoChange?: (tipo: CustomerType) => void;
 }
 
-export default function NSInput({ onCalculate, tipo: tipoProp, onTipoChange }: NSInputProps) {
+export default function NSInput({
+  onCalculate,
+  tipo: tipoProp,
+  onTipoChange,
+}: NSInputProps) {
   const [cities, setCities] = useState<CityOption[]>([]);
   const [ciudad, setCiudad] = useState("Ibarra");
   const [tipoInternal, setTipoInternal] = useState<CustomerType>("residencial");
@@ -39,7 +43,7 @@ export default function NSInput({ onCalculate, tipo: tipoProp, onTipoChange }: N
     else setTipoInternal(next);
   };
   const [consumo, setConsumo] = useState(300);
-  const [tarifa, setTarifa] = useState(0.10);
+  const [tarifa, setTarifa] = useState(0.1);
   const [distributor, setDistributor] = useState<string | null>(null);
   const [voltageLevel, setVoltageLevel] = useState<string | null>(null);
   const [tariffSource, setTariffSource] = useState<"auto" | "manual">("auto");
@@ -126,7 +130,12 @@ export default function NSInput({ onCalculate, tipo: tipoProp, onTipoChange }: N
       const res = await fetch("/api/solar/calculate", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ city, type, monthly_consumption_kwh, electricity_tariff_usd }),
+        body: JSON.stringify({
+          city,
+          type,
+          monthly_consumption_kwh,
+          electricity_tariff_usd,
+        }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -175,160 +184,162 @@ export default function NSInput({ onCalculate, tipo: tipoProp, onTipoChange }: N
   const factura = consumo * tarifa;
 
   return (
-    <section className="bg-white border-y border-ns-border">
-      <div className="ns-container py-14 max-tablet:py-10">
-        <div className="grid grid-cols-[400px_1fr] max-tablet:grid-cols-1 gap-12 items-center">
-          {/* Left: copy */}
-          <div>
-            <span className="ns-eyebrow">INGRESE SUS DATOS</span>
-            <h2
-              className="font-display font-extrabold text-ns-navy leading-[1.1] tracking-[-0.02em] mt-3 mb-4 m-0"
-              style={{ fontSize: "clamp(26px, 2.8vw, 38px)" }}
+    <div className="grid grid-cols-[400px_1fr] max-tablet:grid-cols-1 gap-12 items-center">
+      {/* Left: copy */}
+      <div>
+        <span className="ns-eyebrow">INGRESE SUS DATOS</span>
+        <h2
+          className="font-display font-extrabold text-ns-navy leading-[1.1] tracking-[-0.02em] mt-3 mb-4 m-0"
+          style={{ fontSize: "clamp(26px, 2.8vw, 38px)" }}
+        >
+          CALCULA TU KIT IDEAL
+        </h2>
+        <p className="font-body text-ns-muted text-[15px] leading-[1.65] m-0">
+          Responda 4 datos y obtenga su recomendación personalizada con ahorro
+          real.
+        </p>
+      </div>
+
+      {/* Right: inputs */}
+      <div className="flex flex-col gap-5">
+        <div className="grid grid-cols-4 max-tablet:grid-cols-2 gap-4">
+          {/* Ciudad */}
+          <div className="flex flex-col gap-2">
+            <label className="font-body text-[12px] font-medium text-ns-muted">
+              Ciudad
+            </label>
+            <select
+              className="ns-input w-full"
+              value={ciudad}
+              onChange={(e) => handleCityChange(e.target.value)}
             >
-              Calcule su kit ideal
-              <br />
-              en menos de 30 segundos
-            </h2>
-            <p className="font-body text-ns-muted text-[15px] leading-[1.65] m-0">
-              Responda 4 datos y obtenga su recomendación personalizada con
-              ahorro real.
-            </p>
+              {cities.length > 0 ? (
+                cities.map((c) => (
+                  <option key={c.id} value={c.name}>
+                    {c.name}
+                  </option>
+                ))
+              ) : (
+                <option value={ciudad}>{ciudad}</option>
+              )}
+            </select>
+            {distributor && (
+              <p className="font-body text-[11px] text-ns-muted m-0 leading-tight">
+                Distribuidora:{" "}
+                <span className="font-medium text-ns-navy">{distributor}</span>
+              </p>
+            )}
           </div>
 
-          {/* Right: inputs */}
-          <div className="flex flex-col gap-5">
-            <div className="grid grid-cols-4 max-tablet:grid-cols-2 gap-4">
-              {/* Ciudad */}
-              <div className="flex flex-col gap-2">
-                <label className="font-body text-[12px] font-medium text-ns-muted">
-                  Ciudad
-                </label>
-                <select
-                  className="ns-input w-full"
-                  value={ciudad}
-                  onChange={(e) => handleCityChange(e.target.value)}
-                >
-                  {cities.length > 0
-                    ? cities.map((c) => (
-                        <option key={c.id} value={c.name}>
-                          {c.name}
-                        </option>
-                      ))
-                    : <option value={ciudad}>{ciudad}</option>}
-                </select>
-                {distributor && (
-                  <p className="font-body text-[11px] text-ns-muted m-0 leading-tight">
-                    Distribuidora: <span className="font-medium text-ns-navy">{distributor}</span>
-                  </p>
-                )}
-              </div>
+          {/* Tipo de cliente */}
+          <div className="flex flex-col gap-2">
+            <label className="font-body text-[12px] font-medium text-ns-muted">
+              Tipo de cliente
+            </label>
+            <select
+              className="ns-input w-full"
+              value={tipo}
+              onChange={(e) => handleTipoChange(e.target.value as CustomerType)}
+            >
+              {TIPOS.map((t) => (
+                <option key={t.value} value={t.value}>
+                  {t.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-              {/* Tipo de cliente */}
-              <div className="flex flex-col gap-2">
-                <label className="font-body text-[12px] font-medium text-ns-muted">
-                  Tipo de cliente
-                </label>
-                <select
-                  className="ns-input w-full"
-                  value={tipo}
-                  onChange={(e) => handleTipoChange(e.target.value as CustomerType)}
-                >
-                  {TIPOS.map((t) => (
-                    <option key={t.value} value={t.value}>
-                      {t.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Consumo mensual */}
-              <div className="flex flex-col gap-2">
-                <label className="font-body text-[12px] font-medium text-ns-muted">
-                  Consumo mensual
-                </label>
-                <div className="relative">
-                  <input
-                    type="number"
-                    min={0}
-                    step={10}
-                    className="ns-input w-full pr-12"
-                    value={consumo}
-                    onChange={(e) =>
-                      setConsumo(Math.max(0, Number(e.target.value)))
-                    }
-                  />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 font-body text-[12px] text-ns-muted pointer-events-none select-none">
-                    kWh
-                  </span>
-                </div>
-              </div>
-
-              {/* Tarifa eléctrica */}
-              <div className="flex flex-col gap-2">
-                <label className="font-body text-[12px] font-medium text-ns-muted">
-                  Tarifa eléctrica
-                </label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 font-body text-[13px] text-ns-navy pointer-events-none select-none">
-                    $
-                  </span>
-                  <input
-                    type="number"
-                    min={0}
-                    step={0.001}
-                    className="ns-input w-full pl-7 pr-18"
-                    value={tarifa}
-                    onChange={(e) => handleTarifaChange(Number(e.target.value))}
-                  />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 font-body text-[11px] text-ns-muted pointer-events-none select-none">
-                    USD/kWh
-                  </span>
-                </div>
-                {tipo === "industrial" && voltageLevel === "medio_voltaje" && (
-                  <p className="font-body text-[11px] text-ns-muted m-0 leading-tight">
-                    Asume medio voltaje. Para alto voltaje,{" "}
-                    <a href="#cotiza" className="text-ns-orange hover:underline">contáctenos</a>.
-                  </p>
-                )}
-                {tariffSource === "manual" && (
-                  <button
-                    type="button"
-                    onClick={restoreSuggested}
-                    className="font-body text-[11px] text-ns-orange hover:underline text-left m-0 p-0 bg-transparent border-0 cursor-pointer"
-                  >
-                    Restablecer tarifa sugerida
-                  </button>
-                )}
-              </div>
+          {/* Consumo mensual */}
+          <div className="flex flex-col gap-2">
+            <label className="font-body text-[12px] font-medium text-ns-muted">
+              Consumo mensual
+            </label>
+            <div className="relative">
+              <input
+                type="number"
+                min={0}
+                step={10}
+                className="ns-input w-full pr-12"
+                value={consumo}
+                onChange={(e) =>
+                  setConsumo(Math.max(0, Number(e.target.value)))
+                }
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 font-body text-[12px] text-ns-muted pointer-events-none select-none">
+                kWh
+              </span>
             </div>
+          </div>
 
-            {/* Bottom row: factura + estado */}
-            <div className="flex items-center justify-between max-tablet:flex-col max-tablet:items-start max-tablet:gap-3">
-              <p className="font-body text-ns-muted text-[13px] m-0">
-                Factura mensual actual aprox.:{" "}
-                <span className="font-display font-semibold text-ns-navy text-[14px]">
-                  $
-                  {factura.toLocaleString("es-EC", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </span>
+          {/* Tarifa eléctrica */}
+          <div className="flex flex-col gap-2">
+            <label className="font-body text-[12px] font-medium text-ns-muted">
+              Tarifa eléctrica
+            </label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 font-body text-[13px] text-ns-navy pointer-events-none select-none">
+                $
+              </span>
+              <input
+                type="number"
+                min={0}
+                step={0.001}
+                className="ns-input w-full pl-7 pr-18"
+                value={tarifa}
+                onChange={(e) => handleTarifaChange(Number(e.target.value))}
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 font-body text-[11px] text-ns-muted pointer-events-none select-none">
+                USD/kWh
+              </span>
+            </div>
+            {tipo === "industrial" && voltageLevel === "medio_voltaje" && (
+              <p className="font-body text-[11px] text-ns-muted m-0 leading-tight">
+                Asume medio voltaje. Para alto voltaje,{" "}
+                <a href="#cotiza" className="text-ns-orange hover:underline">
+                  contáctenos
+                </a>
+                .
               </p>
-              <div className="flex items-center gap-3">
-                {error && (
-                  <span className="font-body text-[12px] text-red-500">{error}</span>
-                )}
-                {loading && (
-                  <span className="flex items-center gap-1.5 font-body text-[13px] text-ns-muted">
-                    <ArrowPathIcon className="w-4 h-4 animate-spin" />
-                    Calculando…
-                  </span>
-                )}
-              </div>
-            </div>
+            )}
+            {tariffSource === "manual" && (
+              <button
+                type="button"
+                onClick={restoreSuggested}
+                className="font-body text-[11px] text-ns-orange hover:underline text-left m-0 p-0 bg-transparent border-0 cursor-pointer"
+              >
+                Restablecer tarifa sugerida
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom row: factura + estado */}
+        <div className="flex items-center justify-between max-tablet:flex-col max-tablet:items-start max-tablet:gap-3">
+          <p className="font-body text-ns-muted text-[13px] m-0">
+            Factura mensual actual aprox.:{" "}
+            <span className="font-display font-semibold text-ns-navy text-[14px]">
+              $
+              {factura.toLocaleString("es-EC", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
+          </p>
+          <div className="flex items-center gap-3">
+            {error && (
+              <span className="font-body text-[12px] text-red-500">
+                {error}
+              </span>
+            )}
+            {loading && (
+              <span className="flex items-center gap-1.5 font-body text-[13px] text-ns-muted">
+                <ArrowPathIcon className="w-4 h-4 animate-spin" />
+                Calculando…
+              </span>
+            )}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
