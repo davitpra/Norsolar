@@ -52,7 +52,7 @@ export default function NSBand() {
                 ${i === 2 ? "max-tablet:border-r border-r-white/10" : ""}
               `}
             >
-              <div className="hidden sm:block shrink-0">{item.icon}</div>
+              <div className="shrink-0">{item.icon}</div>
               <div>
                 <p className="font-display font-semibold text-white text-[15px] leading-tight">
                   {item.title}

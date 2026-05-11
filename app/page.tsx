@@ -59,23 +59,23 @@ export default function Page() {
         <NSBand />
         <NSProblema />
         <section className="ns-container py-14 max-tablet:py-10">
-          <div className="">
-            <NSInput onCalculate={handleCalculate} />
-            <NSKitRecommendation
-              kit={activeKit}
-              kits={calc?.kits ?? []}
-              recommendedKitId={calc?.recommended_kit_id ?? null}
-              onSelectKit={setSelectedKitId}
-            />
-            <NSSavingsResults kit={activeKit} />
-            <SavingsMonthly kit={activeKit} />
-            <NSKitsCarousel
-              kits={calc?.kits ?? []}
-              recommendedKitId={calc?.recommended_kit_id ?? null}
-              selectedKitId={selectedKitId}
-              onSelectKit={setSelectedKitId}
-            />
-          </div>
+          <NSInput onCalculate={handleCalculate} />
+          <NSKitRecommendation
+            kit={activeKit}
+            kits={calc?.kits ?? []}
+            recommendedKitId={calc?.recommended_kit_id ?? null}
+            onSelectKit={setSelectedKitId}
+          />
+        </section>
+        <section className="ns-container py-14 max-tablet:py-10">
+          <NSSavingsResults kit={activeKit} />
+          <SavingsMonthly kit={activeKit} />
+          <NSKitsCarousel
+            kits={calc?.kits ?? []}
+            recommendedKitId={calc?.recommended_kit_id ?? null}
+            selectedKitId={selectedKitId}
+            onSelectKit={setSelectedKitId}
+          />
         </section>
         <NSBrandBar />
         <NSTestimonials />

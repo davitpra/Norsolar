@@ -79,7 +79,7 @@ export default function NSSavingsResults({ kit }: NSSavingsResultsProps) {
     });
 
   return (
-    <div className="pt-10">
+    <div className="">
       <div className="mb-10">
         <span className="ns-eyebrow">SU AHORRO ESTIMADO</span>
         <h2 className="ns-display-h-md mt-1 mb-0">

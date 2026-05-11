@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 interface Problema {
   img: string;
@@ -9,25 +9,25 @@ interface Problema {
 
 const problemas: Problema[] = [
   {
-    img: '/assets/problema/factura.png',
-    alt: 'Planilla eléctrica CNEL con valor alto',
-    titulo: 'Tarifas cada vez más altas',
+    img: "/assets/problema/factura.jpg",
+    alt: "Planilla eléctrica CNEL con valor alto",
+    titulo: "Tarifas cada vez más altas",
     descripcion:
-      'El aumento constante de tarifas impacta su economía familiar y la de su negocio.',
+      "El aumento constante de tarifas impacta su economía familiar y la de su negocio.",
   },
   {
-    img: '/assets/problema/generador.png',
-    alt: 'Generador a gasolina encendido con humo',
-    titulo: 'Generadores: costosos e incómodos',
+    img: "/assets/problema/generador.jpg",
+    alt: "Generador a gasolina encendido con humo",
+    titulo: "Generadores: costosos e incómodos",
     descripcion:
-      'Ruidosos, contaminantes y con gastos constantes de combustible y mantenimiento.',
+      "Ruidosos, contaminantes y con gastos constantes de combustible y mantenimiento.",
   },
   {
-    img: '/assets/problema/noticia.png',
-    alt: 'Titular de El Universo sobre apagones en Ecuador',
-    titulo: 'Inestabilidad eléctrica',
+    img: "/assets/problema/noticia.jpg",
+    alt: "Titular de El Universo sobre apagones en Ecuador",
+    titulo: "Inestabilidad eléctrica",
     descripcion:
-      'Cortes de luz inesperados que afectan su comodidad, productividad y seguridad.',
+      "Cortes de luz inesperados que afectan su comodidad, productividad y seguridad.",
   },
 ];
 
@@ -53,8 +53,8 @@ export default function NSProblema() {
                   src={img}
                   alt={alt}
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 960px) 100vw, 33vw"
+                  className=""
+                  sizes="(max-width: 900px) 100vw, 33vw"
                 />
               </div>
               <div className="p-6">

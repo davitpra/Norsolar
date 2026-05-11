@@ -1,7 +1,7 @@
 export default function NSWhatsAppFab() {
   return (
     <a
-      href="https://wa.me/593961234567"
+      href="https://wa.me/+15198725274"
       className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-[0_12px_32px_rgba(37,211,102,0.45)] z-[90] transition-transform duration-200 hover:scale-[1.08]"
       aria-label="WhatsApp"
     >

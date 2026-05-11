@@ -55,6 +55,15 @@
 }
 
 /* Keyframes (v4 @theme keyframes syntax not yet stable — define here) */
+@keyframes nsMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 @keyframes nsFloat {
   0%,
   100% {

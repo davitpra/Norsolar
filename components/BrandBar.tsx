@@ -1,32 +1,49 @@
 interface Brand {
   name: string;
-  cls: string;
+  style?: React.CSSProperties;
 }
 
-export default function NSBrandBar() {
-  const brands: Brand[] = [
-    { name: 'Trinasolar', cls: 'lowercase' },
-    { name: 'ECOFLOW',    cls: 'tracking-[0.18em] uppercase text-[18px]' },
-    { name: 'K2 Systems', cls: 'lowercase italic' },
-    { name: 'BLOCKSOLAR', cls: 'tracking-[0.04em] uppercase text-[18px]' },
-    { name: 'UNIRAC',     cls: 'tracking-[0.06em] uppercase text-[20px]' },
-  ];
+const brands: Brand[] = [
+  { name: "Trinasolar" },
+  { name: "ECOFLOW", style: { letterSpacing: "0.18em" } },
+  { name: "K2 Systems", style: { fontStyle: "italic" } },
+  { name: "BLOCKSOLAR", style: { letterSpacing: "0.04em" } },
+  { name: "UNIRAC", style: { letterSpacing: "0.06em" } },
+];
 
+const track = [...brands, ...brands];
+
+export default function NSBrandBar() {
   return (
-    <section className="py-14 pb-16 bg-ns-bg-alt">
-      <div className="ns-container">
-        <span className="ns-eyebrow">TRABAJAMOS CON LAS MEJORES MARCAS DEL MERCADO</span>
-        <div className="grid grid-cols-5 max-tablet:grid-cols-3 max-[600px]:grid-cols-2 gap-8 items-center mt-7 opacity-75">
-          {brands.map((b, i) => (
-            <div
-              key={b.name}
-              className={`font-display font-extrabold text-[22px] text-ns-navy tracking-[-0.01em] text-center grayscale hover:grayscale-0 hover:opacity-100 transition-[filter,opacity] duration-[240ms] relative ${b.cls}${
-                i < brands.length - 1
-                  ? " after:content-[''] after:absolute after:right-[-16px] after:top-1/4 after:h-1/2 after:w-px after:bg-[rgba(15,26,46,0.10)]"
-                  : ''
-              }`}
-            >
-              {b.name}
+    <section className="py-10 pb-10 bg-ns-bg-alt overflow-hidden">
+      <div className="ns-container mb-8">
+        <span className="ns-eyebrow">
+          TRABAJAMOS CON LAS MEJORES MARCAS DEL MERCADO
+        </span>
+      </div>
+
+      <div
+        className="relative group "
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+        }}
+      >
+        <div
+          className="flex w-max group-hover:[animation-play-state:paused]"
+          style={{ animation: "nsMarquee 26s linear infinite" }}
+        >
+          {track.map((b, i) => (
+            <div key={i} className="flex items-center shrink-0">
+              <span
+                className="font-display font-extrabold text-[22px] text-ns-navy/40 hover:text-ns-navy transition-colors duration-300 cursor-default select-none px-10"
+                style={b.style}
+              >
+                {b.name}
+              </span>
+              <span className="text-ns-orange/30 text-[8px] shrink-0">◆</span>
             </div>
           ))}
         </div>
